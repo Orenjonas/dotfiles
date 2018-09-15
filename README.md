@@ -1,1 +1,1 @@
-# dotfiles
+Repository to store my config files.
