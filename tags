@@ -4,10 +4,71 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-011|	session.vim	/^normal! 011|$/;"	m
+$NVIM_TUI_ENABLE_TRUE_COLOR	init.vim	/^  let $NVIM_TUI_ENABLE_TRUE_COLOR=1$/;"	v
+010|	session.vim	/^normal! 010|$/;"	m
+<C-h>	init.vim	/^nnoremap <C-h> ddp$/;"	m
+<C-l>	init.vim	/^nnoremap <C-l> ddkP$/;"	m
+<CR>	init.vim	/^inoremap <expr> <CR> (pumvisible() ? "\\<c-y>\\<cr>" : "\\<CR>")$/;"	m
+<F10>	init.vim	/^map <F10> :cprevious<Return>$/;"	m
+<F11>	init.vim	/^map <F11> :cnext<Return>$/;"	m
+<Leader>t	init.vim	/^nmap <Leader>t :TagbarToggle<CR>$/;"	m
+<S-Tab>	init.vim	/^inoremap <expr> <S-Tab> pumvisible() ? "\\<C-p>" : "\\<S-Tab>"$/;"	m
+<Tab>	init.vim	/^inoremap <expr> <Tab> pumvisible() ? "\\<C-n>" : "\\<Tab>"$/;"	m
+<c-g>	init.vim	/^imap <c-g> <Plug>(cm_force_refresh)$/;"	m
+<c-u>	init.vim	/^inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\\<Plug>(ultisnips_expand)")<cr>$/;"	m
+<leader>c	init.vim	/^map <leader>c :make<Return>:copen<Return>$/;"	m
+<leader>hO	init.vim	/^map <leader>hO :call ToggleHighlight(1)<cr>$/;"	m
+<leader>ho	init.vim	/^map <leader>ho :call ToggleHighlight(1)<cr>$/;"	m
+<leader>r	init.vim	/^map <leader>r :!echo %\\|awk -F. '{print $1}'\\|xargs java<CR>$/;"	m
+BuildComposer	init.vim	/^function! BuildComposer(info)$/;"	f
+CloseViewers	init.vim	/^function! CloseViewers()$/;"	f
+Find	init.vim	/^command! -nargs=1 Find :call Find("<args>")$/;"	c
+Find	init.vim	/^function! Find(name)$/;"	f
+JavaCol	init.vim	/^fu JavaCol(color)$/;"	f
+Peachpuff	init.vim	/^fu Peachpuff()$/;"	f
+Retting	init.vim	/^fu Retting()$/;"	f
+SaveSess	init.vim	/^fu! SaveSess()$/;"	f
 SessionLoad	session.vim	/^let SessionLoad = 1$/;"	v
-s:l	session.vim	/^let s:l = 1 - ((0 * winheight(0) + 25) \/ 50)$/;"	v
+ToggleHighlight	init.vim	/^function! ToggleHighlight(...)$/;"	f
+TxtFoldText	init.vim	/^function! TxtFoldText()$/;"	f
+^^	init.vim	/^inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>$/;"	m
+g:SimpylFold_fold_docstring	init.vim	/^let g:SimpylFold_fold_docstring=1$/;"	v
+g:SimpylFold_fold_import	init.vim	/^let g:SimpylFold_fold_import=1$/;"	v
+g:UltiSnipsExpandTrigger	init.vim	/^let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"$/;"	v
+g:UltiSnipsListSnippets	init.vim	/^let g:UltiSnipsListSnippets="<c-l>"$/;"	v
+g:UltiSnipsSnippetDirectories	init.vim	/^let g:UltiSnipsSnippetDirectories = ['ultisnips', $HOME.'\/.config\/nvim\/plugged\/ultisnips', $HOME.'\/.config\/nvim\/plugged\/vim-snippets\/UltiSnips']$/;"	v
+g:UltiSnipsSnippetsDir	init.vim	/^let g:UltiSnipsSnippetsDir = $HOME."\/.config\/nvim\/plugged\/ultisnips"$/;"	v
+g:paredit_mode	init.vim	/^let g:paredit_mode=0$/;"	v
+g:slime_target	init.vim	/^let g:slime_target = "neovim"$/;"	v
+g:solarized_termcolors	init.vim	/^	let g:solarized_termcolors=256$/;"	v
+g:solarized_termtrans	init.vim	/^	let g:solarized_termtrans=1$/;"	v
+g:tex_conceal	init.vim	/^let g:tex_conceal="abdgm"$/;"	v
+g:tex_flavor	init.vim	/^let g:tex_flavor = 'latex'$/;"	v
+g:toggleHighlight	init.vim	/^let g:toggleHighlight = 0$/;"	v
+g:vimtex_compiler_progname	init.vim	/^let g:vimtex_compiler_progname = 'nvr'$/;"	v
+g:vimtex_latexmk_build_dir	init.vim	/^let g:vimtex_latexmk_build_dir = '.\/build'$/;"	v
+g:vimtex_view_general_viewer	init.vim	/^let g:vimtex_view_general_viewer='zathura'$/;"	v
+g:vimtex_view_method	init.vim	/^let g:vimtex_view_method = 'zathura'$/;"	v
+ga	init.vim	/^nmap ga <Plug>(EasyAlign)$/;"	m
+java_comment_strings	init.vim	/^let java_comment_strings=1$/;"	v
+java_highlight_all	init.vim	/^let java_highlight_all=1$/;"	v
+java_highlight_debug	init.vim	/^let java_highlight_debug=1$/;"	v
+java_highlight_functions	init.vim	/^let java_highlight_functions="style"$/;"	v
+java_highlight_java_lang_ids	init.vim	/^let java_highlight_java_lang_ids=1$/;"	v
+java_ignore_javadoc	init.vim	/^let java_ignore_javadoc=1$/;"	v
+java_mark_braces_in_parens_as_errors	init.vim	/^let java_mark_braces_in_parens_as_errors=1$/;"	v
+java_minlines	init.vim	/^let java_minlines = 150$/;"	v
+latexSurround	init.vim	/^augroup latexSurround$/;"	a
+latexSurround	init.vim	/^function! s:latexSurround()$/;"	f
+my_cm_setup	init.vim	/^augroup my_cm_setup$/;"	a
+python_highlight_all	init.vim	/^let python_highlight_all=1$/;"	v
+s:l	session.vim	/^let s:l = 1 - ((0 * winheight(0) + 24) \/ 49)$/;"	v
 s:so_save	session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
 s:sx	session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
 s:wipebuf	session.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
+vimtex_event_1	init.vim	/^augroup vimtex_event_1$/;"	a
+vimtex_event_2	init.vim	/^augroup vimtex_event_2$/;"	a
+zf	init.vim	/^nnoremap          zf zMzvzz$/;"	m
+zj	init.vim	/^nnoremap <silent> zj :silent! normal! zc<cr>zjzvzz$/;"	m
+zk	init.vim	/^nnoremap <silent> zk :silent! normal! zc<cr>zkzvzz[z$/;"	m
 zt	session.vim	/^normal! zt$/;"	m

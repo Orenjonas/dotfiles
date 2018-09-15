@@ -1,1 +1,5 @@
 session.vim
+tags
+files_to_backup.txt
+makesymlinks.sh
+backuptogit.sh
