@@ -1,0 +1,4 @@
+install.sh
+.bashrc
+.bash_aliases
+init.vim

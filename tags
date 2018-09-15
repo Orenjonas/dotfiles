@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 $NVIM_TUI_ENABLE_TRUE_COLOR	init.vim	/^  let $NVIM_TUI_ENABLE_TRUE_COLOR=1$/;"	v
-010|	session.vim	/^normal! 010|$/;"	m
+012|	session.vim	/^normal! 012|$/;"	m
 <C-h>	init.vim	/^nnoremap <C-h> ddp$/;"	m
 <C-l>	init.vim	/^nnoremap <C-l> ddkP$/;"	m
 <CR>	init.vim	/^inoremap <expr> <CR> (pumvisible() ? "\\<c-y>\\<cr>" : "\\<CR>")$/;"	m
