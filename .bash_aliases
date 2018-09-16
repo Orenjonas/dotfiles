@@ -1,9 +1,9 @@
-alias backup_linux='bash ~/bash_scripts/backup.sh'
-alias addtobackup='history | tail -2 | python3 ~/bash_scripts/put_history_input_in_backupscript.py'
+alias backup_linux='bash ~/scripts/bash/backup.sh'
+alias addtobackup='history | tail -2 | python3 ~/scripts/bash/put_history_input_in_backupscript.py'
 alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "percentage|time\ to|state"'
-alias retting='python3 ~/python_scripts/retting.py'
-alias punchin='python3 ~/python_scripts/punchclock.py start'
-alias punchut='python3 ~/python_scripts/punchclock.py slutt'
+alias retting='python3 ~/scripts/python/retting.py'
+alias punchin='python3 ~/scripts/python/punchclock.py start'
+alias punchut='python3 ~/scripts/python/punchclock.py slutt'
 alias punchout='punchut'
 alias scph='scp [lokal dir] jonasore@login.ifi.uio.no:~/MineFiler/<dir>'
 alias timeliste='firefox https://docs.google.com/spreadsheets/d/1VTefFrHpErJc6yqtdLGc1a_-gHTmtlGQHT-ogXUOl-0/edit#gid=0 &'
@@ -34,8 +34,3 @@ $ wget \
     --domains example.com - limit downloads to listed domains (links that point to other domains will not be followed),
     --no-parent - do not download files form folders below given root folder (folder1/folder/ in our example; files from /folder1 are not going to be transferred).
 "'
-
-# compile and run java script
-jac() {
-  javac "$1.java" && java "$1" "$2"
-}

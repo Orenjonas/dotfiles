@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 $NVIM_TUI_ENABLE_TRUE_COLOR	init.vim	/^  let $NVIM_TUI_ENABLE_TRUE_COLOR=1$/;"	v
-012|	session.vim	/^normal! 012|$/;"	m
+025|	session.vim	/^normal! 025|$/;"	m
 <C-h>	init.vim	/^nnoremap <C-h> ddp$/;"	m
 <C-l>	init.vim	/^nnoremap <C-l> ddkP$/;"	m
 <CR>	init.vim	/^inoremap <expr> <CR> (pumvisible() ? "\\<c-y>\\<cr>" : "\\<CR>")$/;"	m
@@ -62,7 +62,7 @@ latexSurround	init.vim	/^augroup latexSurround$/;"	a
 latexSurround	init.vim	/^function! s:latexSurround()$/;"	f
 my_cm_setup	init.vim	/^augroup my_cm_setup$/;"	a
 python_highlight_all	init.vim	/^let python_highlight_all=1$/;"	v
-s:l	session.vim	/^let s:l = 1 - ((0 * winheight(0) + 24) \/ 49)$/;"	v
+s:l	session.vim	/^let s:l = 5 - ((4 * winheight(0) + 27) \/ 54)$/;"	v
 s:so_save	session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
 s:sx	session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
 s:wipebuf	session.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
