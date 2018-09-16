@@ -4,8 +4,8 @@
 cd ~/dotfiles
 
 while read p; do
-  mv $p ~/
-  echo "$p moved to ~/"
+  cp $p ~/
+  echo "$p copied to ~/"
 done <~/dotfiles/files_to_backup.txt
 
 echo "moving init.vim to ~/.config/nvim/"
