@@ -9,7 +9,7 @@ while read p; do
 done <~/dotfiles/files_to_backup.txt
 
 echo "moving init.vim to ~/.config/nvim/"
-mkdir ~/.config/nvim/
+mkdir -p ~/.config/nvim/
 cp ~/init.vim ~/.config/nvim/ && rm ~/init.vim
 
 cd -
