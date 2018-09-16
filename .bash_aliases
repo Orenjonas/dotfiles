@@ -1,6 +1,6 @@
 alias backup_linux='bash ~/scripts/bash/backup.sh'
 alias addtobackup='history | tail -2 | python3 ~/scripts/bash/put_history_input_in_backupscript.py'
-alias bat='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "percentage|time\ to|state"'
+alias bat='upower -i /org/freedesktop/UPower/devices/DisplayDevice | grep -E "percentage|time\ to|state"'
 alias retting='python3 ~/scripts/python/retting.py'
 alias punchin='python3 ~/scripts/python/punchclock.py start'
 alias punchut='python3 ~/scripts/python/punchclock.py slutt'
