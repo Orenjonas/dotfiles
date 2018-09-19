@@ -175,7 +175,6 @@ set shiftwidth=4
 set cinoptions+=j1
 
 au FileType java colorscheme ceudah_jonas
-au FileType tex VimtexView
 
 fu Retting()
     :colorscheme buttercream
@@ -455,6 +454,7 @@ let g:tex_flavor = 'latex'
 "\}
 "}}}
 
+au FileType tex VimtexView
 :nnoremap <Leader>lv :VimtexView<cr>
 ""TODO
 

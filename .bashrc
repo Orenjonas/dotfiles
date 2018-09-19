@@ -46,7 +46,7 @@ function climb {
 
 
 # # use vim commands in terminal
-# set -o vi
+set -o vi
 
 # If not running interactively, don't do anything
 case $- in
