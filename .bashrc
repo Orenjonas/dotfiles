@@ -4,8 +4,15 @@
 
 ## Functions
 
+# Create github repo from commandline
+# usage:
+# > gitcreaterepo [USERNAME] [REPONAME]
+gitcreaterepo() {
+	curl -u "$1" https://api.github.com/user/repos -d '{"name":"'$2'"}'
+}
+
 # Backup dotfiles to git
-function backupdotmsg() {
+backupdot_with_msg() {
 	cp ~/.config/nvim/init.vim ~/dotfiles
 	cp ~/.bash_aliases ~/dotfiles
 	cp ~/.bashrc ~/dotfiles
@@ -16,13 +23,12 @@ function backupdotmsg() {
 
 	cd ~/dotfiles
 	git commit -m "$1"
-	git status
 	git push origin master
 	cd -
 }
 
 # Change title of tabs
-function set-title() {
+set-title() {
   if [[ -z "$ORIG" ]]; then
     ORIG=$PS1
   fi
@@ -31,7 +37,7 @@ function set-title() {
 }
 
 # For subsequent "cd ../../" etc.
-function climb {
+climb() {
   declare -i n
   if [ $# == 0 ]; then
     n=1
@@ -44,9 +50,14 @@ function climb {
   done
 }
 
+# compile and run java script with one potential command line argument
+jac() {
+  javac "$1.java" && java "$1" "$2"
+}
+
 
 # # use vim commands in terminal
-set -o vi
+# set -o vi
 
 # If not running interactively, don't do anything
 case $- in
