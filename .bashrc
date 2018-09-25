@@ -4,6 +4,16 @@
 
 ## Functions
 
+# Present directory results from locate and dhange directory to users choise
+locd() {
+  arr=($(locate $1))
+  for i in $(seq 1 ${#arr[@]}); do
+    echo $i $(dirname ${arr[$i]})
+  done
+  read choise # user inputs number corresponding to path
+  cd $(dirname ${arr[$choise]})
+}
+
 # Create github repo from commandline
 # usage:
 # > gitcreaterepo [USERNAME] [REPONAME]
@@ -17,11 +27,13 @@ backupdot_with_msg() {
 	cp ~/.bash_aliases ~/dotfiles
 	cp ~/.bashrc ~/dotfiles
 
+  cd ~/dotfiles
+
 	while read p; do
+    echo adding $p
 		git add $p
 	done <~/dotfiles/files_to_backup.txt # list of files/folders to symlink in homedir
 
-	cd ~/dotfiles
 	git commit -m "$1"
 	git push origin master
 	cd -

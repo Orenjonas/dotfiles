@@ -1,5 +1,5 @@
 
-" Markdown {{{
+" arkdown {{{
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     if has('nvim')
@@ -14,7 +14,7 @@ endfunction
 """ VimPlug {{{
 call plug#begin('~/.config/nvim/plugged')
 
-
+Plug 'skywind3000/asyncrun.vim'
 
 Plug 'junegunn/vim-plug', { 'on' : [] }
 Plug 'tmhedberg/SimpylFold'
@@ -327,11 +327,19 @@ filetype plugin indent on
 " }}}
 
 " remaps {{{
+"
+" Copy to clipboard
+:nnoremap <Leader>y "+y
+:vnoremap <Leader>y "+y
+:nnoremap <Leader>p "+p
+:vnoremap <Leader>p "+p
 
 " vim-run shortcut
 :nnoremap <Leader>R :Run<cr>
 :nnoremap <Leader>p2 :!python %:p<cr>
 :nnoremap <Leader>p3 :!python3 %:p<cr>
+:nnoremap <Leader>ap2 :AsyncRun python %:p<cr>
+:nnoremap <Leader>ap3 :AsyncRun python3 %:p<cr>
 " Move lines with Ctrl-h, Ctrl-l
 nnoremap <C-h> ddp
 nnoremap <C-l> ddkP
