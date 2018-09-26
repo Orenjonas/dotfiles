@@ -7,7 +7,7 @@
 # Present directory results from locate and dhange directory to users choise
 locd() {
   arr=($(locate $1))
-  for i in $(seq 1 ${#arr[@]}); do
+  for i in $(seq 1 $((${#arr[@]} - 1))); do
     echo $i $(dirname ${arr[$i]})
   done
   read choise # user inputs number corresponding to path
