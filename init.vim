@@ -240,7 +240,7 @@ endif
 " autosave session {{{
 " (if sessionfile exists in pwd)
 fu! SaveSess()
-    execute 'mksession! session.vim'
+    execute 'mksession! ~/.vimsessions/session.vim'
 endfunction
 
 "fu! RestoreSess()
@@ -261,7 +261,7 @@ autocmd VimLeave * call SaveSess()
 :set number relativenumber
 :set hidden
 
-au FileType python colorscheme greenslime
+au FileType python colorscheme azuki
 
 " Long | to separate windows
 " set fillchars+=vert:│
@@ -351,8 +351,8 @@ nnoremap <C-l> ddkP
 :nnoremap <Leader>f{ /{<cr>V%zf
 
 " Move between tabs
-:nnoremap <Leader>j :tabprevious<cr>
-:nnoremap <Leader>k :tabnext<cr>
+:nnoremap <Leader>w :tabprevious<cr>
+:nnoremap <Leader>e :tabnext<cr>
 
 " Visual all text, similar to ctrl-a in windows (to remember: ctrl-w mark all)
 :nnoremap <C-w><C-m><C-a> ggVGo
