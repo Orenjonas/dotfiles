@@ -1,5 +1,5 @@
 
-" arkdown {{{
+" Markdown {{{
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     if has('nvim')
@@ -13,10 +13,15 @@ endfunction
 
 """ VimPlug {{{
 call plug#begin('~/.config/nvim/plugged')
+Plug 'junegunn/vim-plug', { 'on' : [] }
+
+
+
+Plug 'jalvesaq/Nvim-R'
 
 Plug 'skywind3000/asyncrun.vim'
+Plug 'gcmt/taboo.vim'
 
-Plug 'junegunn/vim-plug', { 'on' : [] }
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'vim-scripts/indentpython.vim'
@@ -77,6 +82,7 @@ Plug 'astrails/dotvim'
 Plug 'kien/ctrlp.vim'
 
 " Colorscemes
+Plug 'jalvesaq/southernlights'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'cocopon/iceberg.vim'
 Plug 'whatyouhide/vim-gotham'
@@ -257,10 +263,39 @@ autocmd VimLeave * call SaveSess()
 "}}}
 
 " Basic setup {{{
+
+set splitbelow
+set splitright
+
+" terminal colors {{{
+" let g:terminal_color_0  = '#000000'
+" let g:terminal_color_1  = '#cc0000'
+" let g:terminal_color_2  = '#4e9a06'
+" let g:terminal_color_3  = '#c4a000'
+" let g:terminal_color_4  = '#3465a4'
+" let g:terminal_color_5  = '#75507b'
+" let g:terminal_color_6  = '#0b939b'
+" let g:terminal_color_7  = '#d3d7cf'
+" let g:terminal_color_8  = '#555753'
+" let g:terminal_color_9  = '#ef2929'
+" let g:terminal_color_10 = '#8ae234'
+" let g:terminal_color_11 = '#fce94f'
+" let g:terminal_color_12 = '#729fcf'
+" let g:terminal_color_13 = '#ad7fa8'
+" let g:terminal_color_14 = '#00f5e9'
+" let g:terminal_color_15 = '#eeeeec'
+" }}}
+
+
+set inccommand=split
+
+fu Nvimrc()
+    tabe ~/.config/nvim/init.vim
+endfunction
+
 " Set relative linenumbering in current window, and regular numbering for other tabs
 :set number relativenumber
 :set hidden
-
 au FileType python colorscheme azuki
 
 " Long | to separate windows
@@ -278,9 +313,26 @@ set laststatus=2
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+"TabMessage() Open output of Ex cmd in new window {{{
+function! TabMessage(cmd)
+  redir => message
+  silent execute a:cmd
+  redir END
+  if empty(message)
+    echoerr "no output"
+  else
+    " use "new" instead of "tabnew" below if you prefer split windows instead of tabs
+    vnew
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+    silent put=message
+  endif
+endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+"}}}
+
 ""Highlight variable(++) under cursor{{{
 
-let g:toggleHighlight = 0
+let g:toggleHighlight = 1
 function! ToggleHighlight(...)
   if a:0 == 1 "toggle behaviour
     let g:toggleHighlight = 1 - g:toggleHighlight
@@ -327,7 +379,25 @@ filetype plugin indent on
 " }}}
 
 " remaps {{{
-"
+
+" Mimic Emacs Line Editing in Insert Mode Only
+inoremap <C-A> <Home>
+inoremap <C-B> <Left>
+inoremap <C-E> <End>
+inoremap <C-F> <Right>
+inoremap <C-K> <Esc>lDa
+inoremap <C-U> <Esc>d0xi
+inoremap <C-Y> <Esc>Pa
+inoremap <C-X><C-S> <Esc>:w<CR>a
+inoremap <A-x> <Esc>:
+inoremap <A-f> <Esc>lwi
+inoremap <A-b> <Esc>bi
+inoremap <A-S-f> <Esc>lWi
+inoremap <A-S-b> <Esc>Bi
+
+" cd of current window to dir of current file
+:nnoremap <Leader>lcd :lcd %:p:h<cr>
+
 " Copy to clipboard
 :nnoremap <Leader>y "+y
 :vnoremap <Leader>y "+y
@@ -461,6 +531,17 @@ let g:tex_flavor = 'latex'
 "    \ 'tex'  : ['{']
 "\}
 "}}}
+
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-pdf',
+    \   '-shell-escape',
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \}
 
 au FileType tex VimtexView
 :nnoremap <Leader>lv :VimtexView<cr>

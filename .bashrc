@@ -5,9 +5,21 @@
 ## Functions
 
 # Present directory results from locate and dhange directory to users choise
+matrix_sym() {
+  python3 ~/scripts/python/symbol_matrix.py $1
+}
+
 locd() {
   arr=($(locate $1))
-  for i in $(seq 1 $((${#arr[@]} - 1))); do
+  for i in $(seq 0 $((${#arr[@]} - 1))); do
+    echo $i $(dirname ${arr[$i]})
+  done
+  read choise # user inputs number corresponding to path
+  cd $(dirname ${arr[$choise]})
+}
+ficd() {
+  arr=($(find -iname "$1" -or -ipath "$1"))
+  for i in $(seq 0 $((${#arr[@]} - 1))); do
     echo $i $(dirname ${arr[$i]})
   done
   read choise # user inputs number corresponding to path
