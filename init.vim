@@ -15,8 +15,13 @@ endfunction
 call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/vim-plug', { 'on' : [] }
 
-
-
+""" vis: apply ex command on selected words instead of lines. usage: {{{
+"  Use V, v, or ctrl-v to visually mark some region.  Then use
+"       :B cmd     (this command will appear as:   :'<,'>B cmd)
+"
+"    The command will then be applied to just the visually selected region.
+""" }}}
+Plug 'vim-scripts/vis'
 Plug 'jalvesaq/Nvim-R'
 
 Plug 'skywind3000/asyncrun.vim'
