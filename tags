@@ -5,7 +5,19 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 $NVIM_TUI_ENABLE_TRUE_COLOR	init.vim	/^  let $NVIM_TUI_ENABLE_TRUE_COLOR=1$/;"	v
-025|	session.vim	/^normal! 025|$/;"	m
+<A-S-b>	init.vim	/^inoremap <A-S-b> <Esc>Bi$/;"	m
+<A-S-f>	init.vim	/^inoremap <A-S-f> <Esc>lWi$/;"	m
+<A-b>	init.vim	/^inoremap <A-b> <Esc>bi$/;"	m
+<A-f>	init.vim	/^inoremap <A-f> <Esc>lwi$/;"	m
+<A-x>	init.vim	/^inoremap <A-x> <Esc>:$/;"	m
+<C-A>	init.vim	/^inoremap <C-A> <Home>$/;"	m
+<C-B>	init.vim	/^inoremap <C-B> <Left>$/;"	m
+<C-E>	init.vim	/^inoremap <C-E> <End>$/;"	m
+<C-F>	init.vim	/^inoremap <C-F> <Right>$/;"	m
+<C-K>	init.vim	/^inoremap <C-K> <Esc>lDa$/;"	m
+<C-U>	init.vim	/^inoremap <C-U> <Esc>d0xi$/;"	m
+<C-X><C-S>	init.vim	/^inoremap <C-X><C-S> <Esc>:w<CR>a$/;"	m
+<C-Y>	init.vim	/^inoremap <C-Y> <Esc>Pa$/;"	m
 <C-h>	init.vim	/^nnoremap <C-h> ddp$/;"	m
 <C-l>	init.vim	/^nnoremap <C-l> ddkP$/;"	m
 <CR>	init.vim	/^inoremap <expr> <CR> (pumvisible() ? "\\<c-y>\\<cr>" : "\\<CR>")$/;"	m
@@ -25,10 +37,12 @@ CloseViewers	init.vim	/^function! CloseViewers()$/;"	f
 Find	init.vim	/^command! -nargs=1 Find :call Find("<args>")$/;"	c
 Find	init.vim	/^function! Find(name)$/;"	f
 JavaCol	init.vim	/^fu JavaCol(color)$/;"	f
+Nvimrc	init.vim	/^fu Nvimrc()$/;"	f
 Peachpuff	init.vim	/^fu Peachpuff()$/;"	f
 Retting	init.vim	/^fu Retting()$/;"	f
 SaveSess	init.vim	/^fu! SaveSess()$/;"	f
-SessionLoad	session.vim	/^let SessionLoad = 1$/;"	v
+TabMessage	init.vim	/^command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)$/;"	c
+TabMessage	init.vim	/^function! TabMessage(cmd)$/;"	f
 ToggleHighlight	init.vim	/^function! ToggleHighlight(...)$/;"	f
 TxtFoldText	init.vim	/^function! TxtFoldText()$/;"	f
 ^^	init.vim	/^inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>$/;"	m
@@ -44,7 +58,8 @@ g:solarized_termcolors	init.vim	/^	let g:solarized_termcolors=256$/;"	v
 g:solarized_termtrans	init.vim	/^	let g:solarized_termtrans=1$/;"	v
 g:tex_conceal	init.vim	/^let g:tex_conceal="abdgm"$/;"	v
 g:tex_flavor	init.vim	/^let g:tex_flavor = 'latex'$/;"	v
-g:toggleHighlight	init.vim	/^let g:toggleHighlight = 0$/;"	v
+g:toggleHighlight	init.vim	/^let g:toggleHighlight = 1$/;"	v
+g:vimtex_compiler_latexmk	init.vim	/^let g:vimtex_compiler_latexmk = {$/;"	v
 g:vimtex_compiler_progname	init.vim	/^let g:vimtex_compiler_progname = 'nvr'$/;"	v
 g:vimtex_latexmk_build_dir	init.vim	/^let g:vimtex_latexmk_build_dir = '.\/build'$/;"	v
 g:vimtex_view_general_viewer	init.vim	/^let g:vimtex_view_general_viewer='zathura'$/;"	v
@@ -62,13 +77,8 @@ latexSurround	init.vim	/^augroup latexSurround$/;"	a
 latexSurround	init.vim	/^function! s:latexSurround()$/;"	f
 my_cm_setup	init.vim	/^augroup my_cm_setup$/;"	a
 python_highlight_all	init.vim	/^let python_highlight_all=1$/;"	v
-s:l	session.vim	/^let s:l = 5 - ((4 * winheight(0) + 27) \/ 54)$/;"	v
-s:so_save	session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
-s:sx	session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
-s:wipebuf	session.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
 vimtex_event_1	init.vim	/^augroup vimtex_event_1$/;"	a
 vimtex_event_2	init.vim	/^augroup vimtex_event_2$/;"	a
 zf	init.vim	/^nnoremap          zf zMzvzz$/;"	m
 zj	init.vim	/^nnoremap <silent> zj :silent! normal! zc<cr>zjzvzz$/;"	m
 zk	init.vim	/^nnoremap <silent> zk :silent! normal! zc<cr>zkzvzz[z$/;"	m
-zt	session.vim	/^normal! zt$/;"	m
