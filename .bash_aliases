@@ -1,6 +1,6 @@
 alias 4051='cd /home/jonas/Dropbox/UiO/stk4051-Computational_Statistics/oblig1 && nvim oppgavetext.tex'
 alias vimlast='nvim -S ~/.vimsessions/session.vim'
-alias backup_linux='bash ~/scripts/bash/backup.sh'
+alias backup_linux='bash ~/scripts/bash/backuptogit.sh "update"'
 alias addtobackup='history | tail -2 | python3 ~/scripts/bash/put_history_input_in_backupscript.py'
 alias bat='upower -i /org/freedesktop/UPower/devices/DisplayDevice | grep -E "percentage|time\ to|state"'
 alias retting='python3 ~/scripts/python/retting.py'
