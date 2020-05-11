@@ -13,7 +13,11 @@ endfunction
 
 """ VimPlug {{{
 call plug#begin('~/.config/nvim/plugged')
+
 Plug 'junegunn/vim-plug', { 'on' : [] }
+
+" Highlight unique character in words for easier 'f/F/t/T' navigation
+Plug 'unblevable/quick-scope'
 
 """ vis: apply ex command on selected words instead of lines. usage: {{{
 "  Use V, v, or ctrl-v to visually mark some region.  Then use
@@ -21,8 +25,23 @@ Plug 'junegunn/vim-plug', { 'on' : [] }
 "
 "    The command will then be applied to just the visually selected region.
 """ }}}
+
+Plug 'jiangmiao/auto-pairs'
+
+" " Coc is an intellisense engine {{{
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" " }}}
+" " Add matching brace {{{
+" Plug 'neoclide/coc-pairs'
+" " }}}
+
 Plug 'vim-scripts/vis'
 Plug 'jalvesaq/Nvim-R'
+
+Plug 'vim-syntastic/syntastic'
+
+" grammar check
+Plug 'dpelle/vim-LanguageTool'
 
 Plug 'skywind3000/asyncrun.vim'
 Plug 'gcmt/taboo.vim'
@@ -39,7 +58,6 @@ Plug 'sbdchd/vim-run'
 
 " Racket/scheme
 " Plug 'kovisoft/slimv'
-" Plug 'jpalardy/vim-slime'
 
 " vimgrep improved
 "Plug 'tpope/vim-unimpaired'
@@ -87,6 +105,7 @@ Plug 'astrails/dotvim'
 Plug 'kien/ctrlp.vim'
 
 " Colorscemes
+Plug 'fenetikm/falcon'
 Plug 'jalvesaq/southernlights'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'cocopon/iceberg.vim'
@@ -97,7 +116,6 @@ Plug 'vim-scripts/mayansmoke'
 Plug 'lifepillar/vim-solarized8'
 Plug 'andreasvc/vim-256noir'
 Plug 'dennougorilla/azuki.vim'
-Plug 'jalvesaq/southernlights'
 Plug 'emhaye/ceudah.vim'
 Plug 'junegunn/seoul256.vim'
 
@@ -108,18 +126,6 @@ Plug 'https://github.com/davetron5000/java-javadoc-vim'
 Plug 'https://github.com/majutsushi/tagbar'
 call plug#end()
 """}}}
-
-
-" SLIME {{{
-let g:slime_target = "neovim"
-let g:paredit_mode=0
-
-" Usage
-" - Open terminal
-" - Start REPL with plt-r5rs
-" - Get terminal id with :echo b:terminal_job_id
-" - Send sexp with C-c C-c (input job id at prompt)
-"}}}
 
 " Java {{{
 let java_mark_braces_in_parens_as_errors=1
@@ -138,10 +144,10 @@ let java_minlines = 150
 " map <F9> :set makeprg=javac\ %<CR>:make<CR>
 autocmd Filetype java set makeprg=javac\ %
 set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
-map <leader>c :make<Return>:copen<Return>
+map <localleader>comp :make<Return>:copen<Return>
 map <F10> :cprevious<Return>
 map <F11> :cnext<Return>
-map <leader>r :!echo %\|awk -F. '{print $1}'\|xargs java<CR>
+map <localleader>run :!echo %\|awk -F. '{print $1}'\|xargs java<CR>
 
 ""    map <F9> :set makeprg=javac\ %<CR>:make<CR>
 ""    map <F10> :!echo %\|awk -F. '{print $1}'\|xargs java<CR>
@@ -185,25 +191,46 @@ set shiftwidth=4
 "java anonymous classes. Sometimes, you have to use them.
 set cinoptions+=j1
 
-au FileType java colorscheme ceudah_jonas
+au FileType java set background=dark
+au FileType java colorscheme gruvbox
 
-fu Retting()
-    :colorscheme buttercream
-    au FileType java colorscheme buttercream
-    :call ToggleHighlight()
-endfunction
+" fu Retting()
+"     :colorscheme buttercream
+"     au FileType java colorscheme buttercream
+"     :call ToggleHighlight()
+" endfunction
 
 fu JavaCol(color)
     exe ':colorscheme ' . a:color
     exe 'au FileType java colorscheme ' . a:color
 endfunction
 
-fu Peachpuff()
-    :colorscheme peachpuff
-    au FileType java colorscheme peachpuff
-    :call ToggleHighlight()
-endfunction
 "}}}
+
+" {{{ R
+let Rout_more_colors = 1
+" }}}
+
+" auto-pairs (bracket matching) {{{
+" FlyMode is experimental
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+" Shortcuts {{{
+" System Shortcuts:
+    " <CR>  : Insert new indented line after return if cursor in blank brackets or quotes.
+    " <BS>  : Delete brackets in pair
+    " <M-p> : Toggle Autopairs (g:AutoPairsShortcutToggle)
+    " <M-e> : Fast Wrap (g:AutoPairsShortcutFastWrap)
+    " <M-n> : Jump to next closed pair (g:AutoPairsShortcutJump)
+    " <M-b> : BackInsert (g:AutoPairsShortcutBackInsert)
+
+" If <M-p> <M-e> or <M-n> conflict with another keys or want to bind to another keys, add
+
+    " let g:AutoPairsShortcutToggle = '<another key>'
+
+" to .vimrc, if the key is empty string '', then the shortcut will be disabled.
+" }}}
+" }}}
 
 " EasyAlign {{{
 "
@@ -221,7 +248,9 @@ if has('gui_running')
 	let g:solarized_termcolors=256
 	colorscheme solarized
 else
-	colorscheme greenslime
+	" colorscheme greenslime
+	set background=dark
+	colorscheme jonas_gruvbox
 endif
 
 "" Zenburn theme
@@ -269,6 +298,11 @@ autocmd VimLeave * call SaveSess()
 
 " Basic setup {{{
 
+set tw=120
+set mouse=a
+
+set background=dark
+
 set splitbelow
 set splitright
 
@@ -301,7 +335,7 @@ endfunction
 " Set relative linenumbering in current window, and regular numbering for other tabs
 :set number relativenumber
 :set hidden
-au FileType python colorscheme azuki
+" au FileType python colorscheme azuki
 
 " Long | to separate windows
 " set fillchars+=vert:│
@@ -401,20 +435,20 @@ inoremap <A-S-f> <Esc>lWi
 inoremap <A-S-b> <Esc>Bi
 
 " cd of current window to dir of current file
-:nnoremap <Leader>lcd :lcd %:p:h<cr>
+:nnoremap <localleader>cd :lcd %:p:h<cr>
 
 " Copy to clipboard
-:nnoremap <Leader>y "+y
-:vnoremap <Leader>y "+y
-:nnoremap <Leader>p "+p
-:vnoremap <Leader>p "+p
+:nnoremap <Leader>yank "+y
+:vnoremap <Leader>yank "+y
+:nnoremap <Leader>put "+p
+:vnoremap <Leader>put "+p
 
 " vim-run shortcut
-:nnoremap <Leader>R :Run<cr>
-:nnoremap <Leader>p2 :!python %:p<cr>
-:nnoremap <Leader>p3 :!python3 %:p<cr>
-:nnoremap <Leader>ap2 :AsyncRun python %:p<cr>
-:nnoremap <Leader>ap3 :AsyncRun python3 %:p<cr>
+:nnoremap <localleader>R :Run<cr>
+:nnoremap <localleader>p2 :!python %:p<cr>
+:nnoremap <localleader>p3 :!python3 %:p<cr>
+:nnoremap <localleader>ap2 :AsyncRun python %:p<cr>
+:nnoremap <localleader>ap3 :AsyncRun python3 %:p<cr>
 " Move lines with Ctrl-h, Ctrl-l
 nnoremap <C-h> ddp
 nnoremap <C-l> ddkP
@@ -423,11 +457,14 @@ nnoremap <C-l> ddkP
 :nnoremap <Leader>test oleader<cr><esc>
 
 " Fold next {} block (in manual folding)
-:nnoremap <Leader>f{ /{<cr>V%zf
+:nnoremap <localleader>f{ /{<cr>V%zf
+
+" Format json file
+nmap =j :%!python -m json.tool<CR>
 
 " Move between tabs
-:nnoremap <Leader>w :tabprevious<cr>
-:nnoremap <Leader>e :tabnext<cr>
+:nnoremap <localleader>w :tabprevious<cr>
+:nnoremap <localleader>e :tabnext<cr>
 
 " Visual all text, similar to ctrl-a in windows (to remember: ctrl-w mark all)
 :nnoremap <C-w><C-m><C-a> ggVGo
@@ -449,7 +486,12 @@ nnoremap <C-l> ddkP
 :nnoremap <A-k> <C-w>k<C-w>_
 :nnoremap <A-l> <C-w>l
 
-nmap <Leader>t :TagbarToggle<CR>
+nmap <localleader>tbt :TagbarToggle<CR>
+
+" Correct previous spelling mistake on the fly
+inoremap <C-c> <Esc>[s1z=`]a
+set spelllang=en
+set spell
 
 " comment out block
 " au FileType java :vnoremap <leader>co c/*<cr><cr>/<esc>kVp
@@ -476,13 +518,13 @@ inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ult
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 imap <c-g> <Plug>(cm_force_refresh)
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger	= "<tab>"
+let g:UltiSnipsJumpBackwardTrigger	= "<s-tab>"
 "let g:UltiSnipsRemoveSelectModeMappings = 0
 
 let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/plugged/ultisnips"
-let g:UltiSnipsSnippetDirectories = ['ultisnips', $HOME.'/.config/nvim/plugged/ultisnips', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['ultisnips', $HOME.'/.config/nvim/plugged/ultisnips', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips', $HOME.'/.config/nvim/vim-snippets']
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -495,6 +537,15 @@ inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>
 "-- Completion-- }}}
 
 " LaTex {{{
+
+
+ab lda \lambda
+ab afa \alpha
+let g:vimtex_fold_enabled = 0
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_index_show_help = 0
+let g:vimtex_view_method = 'mupdf'
+let g:vimtex_view_mupdf_options = '-r 288'
 
 " Conceal for LaTex
 
@@ -509,6 +560,7 @@ hi Conceal guibg=#000000
 let g:vimtex_latexmk_build_dir = './build'
 " let g:vimtex_latexmk_progname = 'nvr'
 let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_automatic = 0
 let g:vimtex_view_general_viewer='zathura'
 let g:vimtex_view_method = 'zathura'
 "Helps nvim correctly interpret .tex files
@@ -549,7 +601,7 @@ let g:vimtex_compiler_latexmk = {
     \}
 
 au FileType tex VimtexView
-:nnoremap <Leader>lv :VimtexView<cr>
+:nnoremap <localleader>lv :VimtexView<cr>
 ""TODO
 
 " Surround
@@ -680,5 +732,8 @@ endfunction
 command! -nargs=1 Find :call Find("<args>")
 " --Easier file finding with :Find-- }}}
 
+" LanguageTool {{{
+:let g:languagetool_jar='$HOME//Downloads/languagetool/languagetool-standalone/target/LanguageTool-4.6-SNAPSHOT/LanguageTool-4.6-SNAPSHOT/languagetool-commandline.jar'
+" }}}
 
 " vim:foldmethod=marker:foldlevel=0

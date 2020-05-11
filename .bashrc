@@ -4,6 +4,16 @@
 
 ## Functions
 
+# Open vim session by choosing from a list
+vims() {
+  sessions=($(ls ~/.vimsessions/))
+  for i in $(seq 0 $((${#sessions[@]} - 1))); do
+    echo $i ${sessions[$i]}
+  done
+  read choise # user inputs number corresponding to path
+  nvim -S .vimsessions/${sessions[$choise]}
+}
+
 # Present directory results from locate and dhange directory to users choise
 matrix_sym() {
   python3 ~/scripts/python/symbol_matrix.py $1
@@ -12,7 +22,7 @@ matrix_sym() {
 locd() {
   arr=($(locate $1))
   for i in $(seq 0 $((${#arr[@]} - 1))); do
-    echo $i $(dirname ${arr[$i]})
+    echo $i ${arr[$i]}
   done
   read choise # user inputs number corresponding to path
   cd $(dirname ${arr[$choise]})
@@ -78,6 +88,11 @@ climb() {
 jac() {
   javac "$1.java" && java "$1" "$2"
 }
+
+# Initiate virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs   # Optional
+export PROJECT_HOME=$HOME/projects      # Optional
+source /home/jonas/.local/bin/virtualenvwrapper.sh
 
 
 # # use vim commands in terminal
