@@ -16,6 +16,12 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'junegunn/vim-plug', { 'on' : [] }
 
+" Update in terminal by `cd ~/.fzf && git pull && ./install`
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'https://github.com/tpope/vim-fugitive'
+
 " Highlight unique character in words for easier 'f/F/t/T' navigation
 Plug 'unblevable/quick-scope'
 
