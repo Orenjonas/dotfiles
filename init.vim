@@ -16,23 +16,23 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'junegunn/vim-plug', { 'on' : [] }
 
+" {{{ Check out:
+" Plug 'https://github.com/Shougo/deoplete.nvim'
+" }}}
+
+Plug 'https://github.com/airblade/vim-gitgutter'
+
+Plug 'https://github.com/wellle/context.vim'    " Keeps a line of context at top of screen (eg. the current loop of function)
+
 " Update in terminal by `cd ~/.fzf && git pull && ./install`
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'https://github.com/tpope/vim-fugitive'
 
-" Highlight unique character in words for easier 'f/F/t/T' navigation
-Plug 'unblevable/quick-scope'
+Plug 'unblevable/quick-scope'    " Highlight unique character in words for easier 'f/F/t/T' navigation
 
-""" vis: apply ex command on selected words instead of lines. usage: {{{
-"  Use V, v, or ctrl-v to visually mark some region.  Then use
-"       :B cmd     (this command will appear as:   :'<,'>B cmd)
-"
-"    The command will then be applied to just the visually selected region.
-""" }}}
-
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'    " Creates and deletes matching parentheses/braces etc.
 
 " " Coc is an intellisense engine {{{
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -44,21 +44,27 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/vis'
 Plug 'jalvesaq/Nvim-R'
 
+" Syntax checking (needs installed linter)
 Plug 'vim-syntastic/syntastic'
 
 " grammar check
 Plug 'dpelle/vim-LanguageTool'
 
 Plug 'skywind3000/asyncrun.vim'
+
+" Pretty tabs
 Plug 'gcmt/taboo.vim'
 
+" Folding
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'vim-scripts/indentpython.vim'
 
+" Markdown
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
-" Plug 'davidhalter/jedi-vim'
+Plug 'https://github.com/ncm2/ncm2-jedi'
+Plug 'davidhalter/jedi-vim'
 
 Plug 'sbdchd/vim-run'
 
@@ -66,12 +72,18 @@ Plug 'sbdchd/vim-run'
 " Plug 'kovisoft/slimv'
 
 " vimgrep improved
-"Plug 'tpope/vim-unimpaired'
+"Plug 'trope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'romainl/vim-qf/'
 
 " Completion{{{
-Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-completion-manager' "Deprecated
+Plug 'roxma/nvim-yarp'
+Plug 'https://github.com/ncm2/ncm2'
+" NOTE: you need to install completion sources to get completions. Check
+" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 
 "" Deoplete
@@ -90,10 +102,16 @@ Plug 'junegunn/vim-slash'
 
 "Plug 'neomake/neomake'
 Plug 'wellle/targets.vim'
+
 Plug 'junegunn/vim-easy-align'
+
 Plug 'tpope/vim-surround'
+
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+    set conceallevel=1
+    let g:tex_conceal='abdmg'
+    hi Conceal ctermbg=none
 
 "Snippets
 Plug 'honza/vim-snippets'
@@ -132,6 +150,15 @@ Plug 'https://github.com/davetron5000/java-javadoc-vim'
 Plug 'https://github.com/majutsushi/tagbar'
 call plug#end()
 """}}}
+
+" {{{ Stuff to check out
+""" vis: apply ex command on selected words instead of lines. usage: {{{
+"  Use V, v, or ctrl-v to visually mark some region.  Then use
+"       :B cmd     (this command will appear as:   :'<,'>B cmd)
+"
+"    The command will then be applied to just the visually selected region.
+""" }}}
+" }}}
 
 " Java {{{
 let java_mark_braces_in_parens_as_errors=1
@@ -304,6 +331,11 @@ autocmd VimLeave * call SaveSess()
 
 " Basic setup {{{
 
+" Shorter updatetime, can hamper performance
+set updatetime=100
+
+packadd vimball
+
 set tw=120
 set mouse=a
 
@@ -333,10 +365,6 @@ set splitright
 
 
 set inccommand=split
-
-fu Nvimrc()
-    tabe ~/.config/nvim/init.vim
-endfunction
 
 " Set relative linenumbering in current window, and regular numbering for other tabs
 :set number relativenumber
@@ -495,7 +523,7 @@ nmap =j :%!python -m json.tool<CR>
 nmap <localleader>tbt :TagbarToggle<CR>
 
 " Correct previous spelling mistake on the fly
-inoremap <C-c> <Esc>[s1z=`]a
+inoremap <C-x> <Esc>[s1z=`]a
 set spelllang=en
 set spell
 
@@ -513,15 +541,61 @@ set spell
 " Completion-- {{{
 " (python) When the expand key is pressed and nothing has been typed, a popup list
 "for snippets will be triggered.
+" let g:vimtex_complete_enabled = 0
 
+
+" {{{ NCM2 
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" " Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+ " 'on_complete': ['ncm2#on_complete#delay', 180,
+ "              \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+ "
+ "
+ " Pevious:
+	    " \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+
+ au User Ncm2Plugin call ncm2#register_source({
+	    \ 'name' : 'css',
+	    \ 'priority': 9,
+	    \ 'subscope_enable': 1,
+	    \ 'scope': ['css','scss'],
+	    \ 'mark': 'css',
+	    \ 'word_pattern': '[\w\-]+',
+	    \ 'complete_pattern': ':\s*',
+	    \ 'on_complete': ['ncm2#on_complete#delay', 180,
+	    \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+	    \ })
+" }}}
+
+" {{{ UltiSnips
 au FileType python3 :UltiSnipsAddFiletypes python3
 
-let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
-inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
-
-"When the <Enter> key is pressed while the popup menu is visible, it only hides
-"the menu. Use this mapping to hide the menu and also start a new line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+" inoremap <silent> <c-u> <c-r>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<cr>
 
 imap <c-g> <Plug>(cm_force_refresh)
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -529,29 +603,113 @@ let g:UltiSnipsJumpForwardTrigger	= "<tab>"
 let g:UltiSnipsJumpBackwardTrigger	= "<s-tab>"
 "let g:UltiSnipsRemoveSelectModeMappings = 0
 
-let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/plugged/ultisnips"
+" let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/plugged/ultisnips"
 let g:UltiSnipsSnippetDirectories = ['ultisnips', $HOME.'/.config/nvim/plugged/ultisnips', $HOME.'/.config/nvim/plugged/vim-snippets/UltiSnips', $HOME.'/.config/nvim/vim-snippets']
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:UltiSnipsListSnippets="<c-l>"
 
 "Vimtex snippet
 " Using UltiSnips#Anon
 "inoremap <silent> __ __<c-r>=UltiSnips#Anon('_{$1}$0', '__', '', 'i')<cr>
 inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>
+" }}}
+
 "-- Completion-- }}}
 
 " LaTex {{{
 
+" Completion with ncm2 {{{
+" {{{ alternative 1: Basic
 
-ab lda \lambda
-ab afa \alpha
+augroup my_cm_setup
+    autocmd!
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    autocmd Filetype tex call ncm2#register_source({
+		\ 'name': 'vimtex',
+		\ 'priority': 8,
+		\ 'scope': ['tex'],
+		\ 'mark': 'tex',
+		\ 'word_pattern': '\w+',
+		\ 'complete_pattern': g:vimtex#re#ncm2,
+		\ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+		\ })
+augroup END
+
+" }}}
+" {{{ alternative 2: More lenient
+"
+" " For more lenient, omni-complete-like, filtering of completion candidates,
+" " use the following setup (in your init.vim or a personal ftplugin) instead: >
+"   augroup my_cm_setup
+"     autocmd!
+"     autocmd BufEnter * call ncm2#enable_for_buffer()
+"     autocmd Filetype tex call ncm2#register_source({
+"             \ 'name' : 'vimtex-cmds',
+"             \ 'priority': 8,
+"             \ 'complete_length': -1,
+"             \ 'scope': ['tex'],
+"             \ 'matcher': {'name': 'prefix', 'key': 'word'},
+"             \ 'word_pattern': '\w+',
+"             \ 'complete_pattern': g:vimtex#re#ncm2#cmds,
+"             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+"             \ })
+"     autocmd Filetype tex call ncm2#register_source({
+"             \ 'name' : 'vimtex-labels',
+"             \ 'priority': 8,
+"             \ 'complete_length': -1,
+"             \ 'scope': ['tex'],
+"             \ 'matcher': {'name': 'combine',
+"             \             'matchers': [
+"             \               {'name': 'substr', 'key': 'word'},
+"             \               {'name': 'substr', 'key': 'menu'},
+"             \             ]},
+"             \ 'word_pattern': '\w+',
+"             \ 'complete_pattern': g:vimtex#re#ncm2#labels,
+"             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+"             \ })
+"     autocmd Filetype tex call ncm2#register_source({
+"             \ 'name' : 'vimtex-files',
+"             \ 'priority': 8,
+"             \ 'complete_length': -1,
+"             \ 'scope': ['tex'],
+"             \ 'matcher': {'name': 'combine',
+"             \             'matchers': [
+"             \               {'name': 'abbrfuzzy', 'key': 'word'},
+"             \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+"             \             ]},
+"             \ 'word_pattern': '\w+',
+"             \ 'complete_pattern': g:vimtex#re#ncm2#files,
+"             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+"             \ })
+"     autocmd Filetype tex call ncm2#register_source({
+"             \ 'name' : 'bibtex',
+"             \ 'priority': 8,
+"             \ 'complete_length': -1,
+"             \ 'scope': ['tex'],
+"             \ 'matcher': {'name': 'combine',
+"             \             'matchers': [
+"             \               {'name': 'prefix', 'key': 'word'},
+"             \               {'name': 'abbrfuzzy', 'key': 'abbr'},
+"             \               {'name': 'abbrfuzzy', 'key': 'menu'},
+"             \             ]},
+"             \ 'word_pattern': '\w+',
+"             \ 'complete_pattern': g:vimtex#re#ncm2#bibtex,
+"             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+"             \ })
+"   augroup END
+"
+" }}}
+" }}}
+
+
 let g:vimtex_fold_enabled = 0
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_index_show_help = 0
+let g:vimtex_view_general_viewer='mupdf'
 let g:vimtex_view_method = 'mupdf'
 let g:vimtex_view_mupdf_options = '-r 288'
+
+let g:vimtex_latexmk_continuous = 0
 
 " Conceal for LaTex
 
@@ -563,50 +721,26 @@ hi Conceal guibg=#000000
 
 
 "Fix for nvim vimtex 'clientserve' problem
-let g:vimtex_latexmk_build_dir = './build'
-" let g:vimtex_latexmk_progname = 'nvr'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_automatic = 0
-let g:vimtex_view_general_viewer='zathura'
-let g:vimtex_view_method = 'zathura'
+" let g:vimtex_view_general_viewer='zathura'
+" let g:vimtex_view_method = 'zathura'
 "Helps nvim correctly interpret .tex files
-let g:tex_flavor = 'latex'
-"{{{
-"if has('nvim')
-"  let g:vimtex_compiler_progname = 'nvr'
-"endif
-"
-"if !exists('g:neocomplete#sources#omni#input_patterns')
-"   let g:neocomplete#sources#omni#input_patterns = {}
-"endif
-"   let g:neocomplete#sources#omni#input_patterns.tex =
-"	\ g:vimtex#re#neocomplete
-"
-
-
-"if !exists('g:ycm_semantic_triggers')
-"    let g:ycm_semantic_triggers = {}
-"  endif
-"let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
-
-""YouCompleteMe LaTex semantic completion
-"let g:ycm_semantic_triggers = {
-"    \ 'tex'  : ['{']
-"\}
-"}}}
+" let g:tex_flavor = 'latex'
 
 let g:vimtex_compiler_latexmk = {
-    \ 'options' : [
-    \   '-pdf',
-    \   '-shell-escape',
-    \   '-verbose',
-    \   '-file-line-error',
-    \   '-synctex=1',
-    \   '-interaction=nonstopmode',
-    \ ],
-    \}
+	    \ 'build_dir' : './build',
+	    \ 'options' : [
+	    \   '-pdf',
+	    \   '-shell-escape',
+	    \   '-verbose',
+	    \   '-file-line-error',
+	    \   '-synctex=1',
+	    \   '-interaction=nonstopmode',
+	    \ ],
+	    \}
 
-au FileType tex VimtexView
+" au FileType tex VimtexView    " Open pdf automatically
 :nnoremap <localleader>lv :VimtexView<cr>
 ""TODO
 
@@ -622,19 +756,19 @@ function! s:latexSurround()
    let b:surround_{char2nr("c")} = "\\\1command: \1{\r}"
 endfunction
 
-" completion - completion manager
-augroup my_cm_setup
-autocmd!
-autocmd User CmSetup call cm#register_source({
-      \ 'name' : 'vimtex',
-      \ 'priority': 8,
-      \ 'scoping': 1,
-      \ 'scopes': ['tex'],
-      \ 'abbreviation': 'tex',
-      \ 'cm_refresh_patterns': g:vimtex#re#ncm,
-      \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
-      \ })
-augroup END
+" " completion - completion manager
+" augroup my_cm_setup
+" autocmd!
+" autocmd User CmSetup call cm#register_source({
+"       \ 'name' : 'vimtex',
+"       \ 'priority': 8,
+"       \ 'scoping': 1,
+"       \ 'scopes': ['tex'],
+"       \ 'abbreviation': 'tex',
+"       \ 'cm_refresh_patterns': g:vimtex#re#ncm,
+"       \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
+"       \ })
+" augroup END
 
 
 " Events

@@ -2,7 +2,13 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-## Functions
+# thefuck
+eval $(thefuck --alias)
+
+########### Functions ###########
+textemplate() {
+cp ~/dotfiles/template.tex "./$1.tex" && nvim "$1.tex"
+}
 
 # Open vim session by choosing from a list
 vims() {
@@ -19,6 +25,8 @@ matrix_sym() {
   python3 ~/scripts/python/symbol_matrix.py $1
 }
 
+#### Search for file and cd to it ####
+# locate file and cd
 locd() {
   arr=($(locate $1))
   for i in $(seq 0 $((${#arr[@]} - 1))); do
@@ -27,6 +35,8 @@ locd() {
   read choise # user inputs number corresponding to path
   cd $(dirname ${arr[$choise]})
 }
+
+# find file and cd
 ficd() {
   arr=($(find -iname "$1" -or -ipath "$1"))
   for i in $(seq 0 $((${#arr[@]} - 1))); do
@@ -34,6 +44,18 @@ ficd() {
   done
   read choise # user inputs number corresponding to path
   cd $(dirname ${arr[$choise]})
+}
+
+# Using fzf (requires fzf installed)
+fcd() {
+  # Remove spaces from filename
+  arguments=$(echo "$@")
+  firstString=$(fzf -q "$arguments")
+  secondString=""
+  pattern=" "
+  mypath="${firstString//$pattern/$secondString}"
+  # cd to filepath
+  cd "$(dirname $mypath)"
 }
 
 # Create github repo from commandline
@@ -213,3 +235,6 @@ if ! shopt -oq posix; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# dstask
+source /home/jonas/.dstask-bash-completions.sh

@@ -1,3 +1,4 @@
+alias task=dstask
 alias 4051='cd /home/jonas/Dropbox/UiO/stk4051-Computational_Statistics/oblig1 && nvim oppgavetext.tex'
 alias vimlast='nvim -S ~/.vimsessions/session.vim'
 alias backup_linux='bash ~/scripts/bash/backuptogit.sh "update"'
