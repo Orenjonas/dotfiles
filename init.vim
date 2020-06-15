@@ -1,3 +1,6 @@
+" TODO install nvim with snap
+" Stable build:
+"sudo snap install --beta nvim --classic
 
 " Markdown {{{
 function! BuildComposer(info)
@@ -16,19 +19,16 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'junegunn/vim-plug', { 'on' : [] }
 
-" {{{ Check out:
-" Plug 'https://github.com/Shougo/deoplete.nvim'
-" }}}
 
-Plug 'https://github.com/airblade/vim-gitgutter'
+" Plug 'https://github.com/airblade/vim-gitgutter'
 
-Plug 'https://github.com/wellle/context.vim'    " Keeps a line of context at top of screen (eg. the current loop of function)
+" Plug 'https://github.com/wellle/context.vim'    " Keeps a line of context at top of screen (eg. the current loop of function)
 
 " Update in terminal by `cd ~/.fzf && git pull && ./install`
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-Plug 'https://github.com/tpope/vim-fugitive'
+" Plug 'https://github.com/tpope/vim-fugitive'
 
 Plug 'unblevable/quick-scope'    " Highlight unique character in words for easier 'f/F/t/T' navigation
 
@@ -41,59 +41,62 @@ Plug 'unblevable/quick-scope'    " Highlight unique character in words for easie
 " Plug 'neoclide/coc-pairs'
 " " }}}
 
-Plug 'vim-scripts/vis'
-Plug 'jalvesaq/Nvim-R'
+" Plug 'vim-scripts/vis'
+" Plug 'jalvesaq/Nvim-R'
 
 " Syntax checking (needs installed linter)
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 
 " grammar check
 Plug 'dpelle/vim-LanguageTool'
 
-Plug 'skywind3000/asyncrun.vim'
+" Plug 'skywind3000/asyncrun.vim'
 
 " Pretty tabs
-Plug 'gcmt/taboo.vim'
+" Plug 'gcmt/taboo.vim'
 
 " Folding
-Plug 'tmhedberg/SimpylFold'
-Plug 'Konfekt/FastFold'
-Plug 'vim-scripts/indentpython.vim'
+" Plug 'tmhedberg/SimpylFold'
+" Plug 'Konfekt/FastFold'
+" Plug 'vim-scripts/indentpython.vim'
 
 " Markdown
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
-Plug 'https://github.com/ncm2/ncm2-jedi'
-Plug 'davidhalter/jedi-vim'
+" Plug 'https://github.com/ncm2/ncm2-jedi'
+" Plug 'davidhalter/jedi-vim'
 
-Plug 'sbdchd/vim-run'
-
-" Racket/scheme
-" Plug 'kovisoft/slimv'
+" Plug 'sbdchd/vim-run'
 
 " vimgrep improved
 "Plug 'trope/vim-unimpaired'
+
+" commentary.vim: comment stuff out with gc
 Plug 'tpope/vim-commentary'
+
+" Tame the quickfix window 
 Plug 'romainl/vim-qf/'
 
 " Completion{{{
-" Plug 'roxma/nvim-completion-manager' "Deprecated
-Plug 'roxma/nvim-yarp'
-Plug 'https://github.com/ncm2/ncm2'
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
+" " "Deprecated
+" " Plug 'roxma/nvim-completion-manager'
+" Plug 'roxma/nvim-yarp'
+" Plug 'https://github.com/ncm2/ncm2'
+" " NOTE: you need to install completion sources to get completions. Check
+" " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 
 "" Deoplete
-"if has('nvim')
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 " }}} 
 "Plug 'roxma/nvim-yarp'
 
@@ -103,13 +106,12 @@ Plug 'junegunn/vim-slash'
 "Plug 'neomake/neomake'
 Plug 'wellle/targets.vim'
 
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-surround'
 
 Plug 'lervag/vimtex'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
-    set conceallevel=1
     let g:tex_conceal='abdmg'
     hi Conceal ctermbg=none
 
@@ -126,9 +128,12 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'astrails/dotvim'
 
 " Fuzzy file/buffer finder
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 
 " Colorscemes
+Plug 'https://github.com/gregsexton/Atom'
+Plug 'https://github.com/endel/vim-github-colorscheme'
+Plug 'https://github.com/mkarmona/materialbox'
 Plug 'fenetikm/falcon'
 Plug 'jalvesaq/southernlights'
 Plug 'liuchengxu/space-vim-dark'
@@ -143,9 +148,9 @@ Plug 'dennougorilla/azuki.vim'
 Plug 'emhaye/ceudah.vim'
 Plug 'junegunn/seoul256.vim'
 
-" java
-Plug 'morhetz/gruvbox'
-Plug 'https://github.com/davetron5000/java-javadoc-vim'
+" " java
+" Plug 'morhetz/gruvbox'
+" Plug 'https://github.com/davetron5000/java-javadoc-vim'
 
 Plug 'https://github.com/majutsushi/tagbar'
 call plug#end()
@@ -169,10 +174,12 @@ let java_highlight_java_lang_ids=1
 let java_highlight_functions="style"
 let java_minlines = 150
 
-" Compile shortcut {{{
-" http://vim.wikia.com/wiki/Compile_Java_with_Sun_JDK_javac
-" F9/F10 compile/run default file.
-" F11/F12 compile/run alternate file.
+"" Compile shortcut {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" http://vim.wikia.com/wiki/Compile_Java_with_Sun_JDK_javac
+""" F9/F10 compile/run default file.
+""" F11/F12 compile/run alternate file.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " map <F9> :set makeprg=javac\ %<CR>:make<CR>
 autocmd Filetype java set makeprg=javac\ %
@@ -224,20 +231,6 @@ set shiftwidth=4
 "java anonymous classes. Sometimes, you have to use them.
 set cinoptions+=j1
 
-au FileType java set background=dark
-au FileType java colorscheme gruvbox
-
-" fu Retting()
-"     :colorscheme buttercream
-"     au FileType java colorscheme buttercream
-"     :call ToggleHighlight()
-" endfunction
-
-fu JavaCol(color)
-    exe ':colorscheme ' . a:color
-    exe 'au FileType java colorscheme ' . a:color
-endfunction
-
 "}}}
 
 " {{{ R
@@ -245,9 +238,9 @@ let Rout_more_colors = 1
 " }}}
 
 " auto-pairs (bracket matching) {{{
-" FlyMode is experimental
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
+" " FlyMode is experimental
+" let g:AutoPairsFlyMode = 0
+" let g:AutoPairsShortcutBackInsert = '<M-b>'
 " Shortcuts {{{
 " System Shortcuts:
     " <CR>  : Insert new indented line after return if cursor in blank brackets or quotes.
@@ -281,16 +274,8 @@ if has('gui_running')
 	let g:solarized_termcolors=256
 	colorscheme solarized
 else
-	" colorscheme greenslime
-	set background=dark
-	colorscheme jonas_gruvbox
+	colorscheme jonas_atom
 endif
-
-"" Zenburn theme
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"colorscheme zenburn
-"let g:zenburn_high_Contrast=1
-"set background=dark " or light
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -544,52 +529,52 @@ set spell
 " let g:vimtex_complete_enabled = 0
 
 
-" {{{ NCM2 
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
+"" {{{ NCM2 
+"" enable ncm2 for all buffers
+"autocmd BufEnter * call ncm2#enable_for_buffer()
 
-" IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+"" IMPORTANT: :help Ncm2PopupOpen for more information
+"set completeopt=noinsert,menuone,noselect
 
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
+"" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+"" found' messages
+"set shortmess+=c
 
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
+"" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+"inoremap <c-c> <ESC>
 
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"" When the <Enter> key is pressed while the popup menu is visible, it only
+"" hides the menu. Use this mapping to close the menu and also start a new
+"" line.
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
-" " Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"" " Use <TAB> to select the popup menu:
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
- " 'on_complete': ['ncm2#on_complete#delay', 180,
- "              \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
- "
- "
- " Pevious:
-	    " \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+"" wrap existing omnifunc
+"" Note that omnifunc does not run in background and may probably block the
+"" editor. If you don't want to be blocked by omnifunc too often, you could
+"" add 180ms delay before the omni wrapper:
+" " 'on_complete': ['ncm2#on_complete#delay', 180,
+" "              \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+" "
+" "
+" " Pevious:
+"	    " \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
 
- au User Ncm2Plugin call ncm2#register_source({
-	    \ 'name' : 'css',
-	    \ 'priority': 9,
-	    \ 'subscope_enable': 1,
-	    \ 'scope': ['css','scss'],
-	    \ 'mark': 'css',
-	    \ 'word_pattern': '[\w\-]+',
-	    \ 'complete_pattern': ':\s*',
-	    \ 'on_complete': ['ncm2#on_complete#delay', 180,
-	    \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-	    \ })
-" }}}
+" au User Ncm2Plugin call ncm2#register_source({
+"	    \ 'name' : 'css',
+"	    \ 'priority': 9,
+"	    \ 'subscope_enable': 1,
+"	    \ 'scope': ['css','scss'],
+"	    \ 'mark': 'css',
+"	    \ 'word_pattern': '[\w\-]+',
+"	    \ 'complete_pattern': ':\s*',
+"	    \ 'on_complete': ['ncm2#on_complete#delay', 180,
+"	    \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+"	    \ })
+"" }}}
 
 " {{{ UltiSnips
 au FileType python3 :UltiSnipsAddFiletypes python3
@@ -618,24 +603,28 @@ inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>
 
 " LaTex {{{
 
+au Filetype tex let tw=100
+au Filetype tex ab beq \begin{equation*}
+au Filetype tex ab bal \begin{align*}
+
 " Completion with ncm2 {{{
-" {{{ alternative 1: Basic
+" " {{{ alternative 1: Basic
 
-augroup my_cm_setup
-    autocmd!
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-    autocmd Filetype tex call ncm2#register_source({
-		\ 'name': 'vimtex',
-		\ 'priority': 8,
-		\ 'scope': ['tex'],
-		\ 'mark': 'tex',
-		\ 'word_pattern': '\w+',
-		\ 'complete_pattern': g:vimtex#re#ncm2,
-		\ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-		\ })
-augroup END
+" augroup my_cm_setup
+"     autocmd!
+"     autocmd BufEnter * call ncm2#enable_for_buffer()
+"     autocmd Filetype tex call ncm2#register_source({
+" 		\ 'name': 'vimtex',
+" 		\ 'priority': 8,
+" 		\ 'scope': ['tex'],
+" 		\ 'mark': 'tex',
+" 		\ 'word_pattern': '\w+',
+" 		\ 'complete_pattern': g:vimtex#re#ncm2,
+" 		\ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+" 		\ })
+" augroup END
 
-" }}}
+" " }}}
 " {{{ alternative 2: More lenient
 "
 " " For more lenient, omni-complete-like, filtering of completion candidates,
@@ -701,21 +690,27 @@ augroup END
 " }}}
 " }}}
 
+" {{{ Completion with deoplete
+" This is new style
+call deoplete#custom#var('omni', 'input_patterns', {
+	    \ 'tex': g:vimtex#re#deoplete
+	    \})
+" }}}
 
 let g:vimtex_fold_enabled = 0
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_index_show_help = 0
-let g:vimtex_view_general_viewer='mupdf'
-let g:vimtex_view_method = 'mupdf'
-let g:vimtex_view_mupdf_options = '-r 288'
+" let g:vimtex_view_general_viewer='mupdf'
+" let g:vimtex_view_method = 'mupdf'
+" let g:vimtex_view_mupdf_options = '-r 288'
 
 let g:vimtex_latexmk_continuous = 0
 
 " Conceal for LaTex
 
-set conceallevel=2
+au Filetype tex set conceallevel=1
 let g:tex_conceal="abdgm"
-hi Conceal guibg=#000000
+" hi Conceal guibg=#000000
 
 " --vimTex--
 
@@ -723,10 +718,10 @@ hi Conceal guibg=#000000
 "Fix for nvim vimtex 'clientserve' problem
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_automatic = 0
-" let g:vimtex_view_general_viewer='zathura'
-" let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_general_viewer='zathura'
+let g:vimtex_view_method = 'zathura'
 "Helps nvim correctly interpret .tex files
-" let g:tex_flavor = 'latex'
+let g:tex_flavor = 'latex'
 
 let g:vimtex_compiler_latexmk = {
 	    \ 'build_dir' : './build',
