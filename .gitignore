@@ -2,6 +2,8 @@ session.vim
 tags
 makesymlinks.sh
 
+build/*
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
