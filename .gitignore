@@ -1,6 +1,7 @@
 session.vim
 tags
 makesymlinks.sh
+*pdf
 
 build/*
 
