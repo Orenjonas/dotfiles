@@ -1,5 +1,7 @@
+# alias vassal="(~/VASSAL-3.4.2/VASSAL.sh &) && exit"
 alias task=dstask
-alias 4051='cd /home/jonas/Dropbox/UiO/stk4051-Computational_Statistics/eksamen && nvim oppgavetext.tex'
+alias esli="(zathura ~/Dropbox/ESLII_print12.pdf &) && exit"
+alias 4090='cd /home/jonas/Dropbox/UiO/stk4090-Large_Sample/eksamen && nvim oppgavetext.tex'
 alias vimlast='nvim -S ~/.vimsessions/session.vim'
 alias backup_linux='bash ~/scripts/bash/backuptogit.sh "update"'
 alias addtobackup='history | tail -2 | python3 ~/scripts/bash/put_history_input_in_backupscript.py'

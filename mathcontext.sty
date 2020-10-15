@@ -6,6 +6,10 @@
 % An Incredible degree of information can be found at
 % http://en.wikibooks.org/wiki/LaTeX/Mathematics
 
+% Do not indent paragraphs
+\setlength{\parindent}{0pt}
+
+
 % Use wide margins, but not quite so wide as fullpage.sty
 \marginparwidth 0.5in 
 \oddsidemargin 0.25in 
@@ -53,11 +57,18 @@
 
 
 % argmin and argmax
+\DeclareMathOperator*{\R}{\mathbb{R}}
 \DeclareMathOperator*{\argmin}{argmin}
 \DeclareMathOperator*{\argmax}{argmax}
 
+% Convergence in probability
+\DeclareMathOperator{\pto}{\;\xrightarrow{\;p\;}\;}
+\DeclareMathOperator{\dto}{\;\xrightarrow{\;d\;}\;}
+
 % Statistics math operators
+\DeclareMathOperator{\Lik}{\mathcal{L}}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Corr}{Corr}
 \DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\Cov}{Cov}
 % \newcommand*\E{\mathop{{}\mathbb{E}}} % Alternative E
@@ -65,6 +76,9 @@
 
 % Conditional bar
 \newcommand*\cond{\,|\,}
+% TODO create operator from
+%\Pr\left( A \;\middle\vert\; B \right)
+
 
 % Make arrays more spacey
 \renewcommand\arraystretch{1.2}

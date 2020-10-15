@@ -6,6 +6,11 @@
 eval $(thefuck --alias)
 
 ########### Functions ###########
+
+vassal() {
+  ~/VASSAL-3.4.2/VASSAL.sh $@
+}
+
 textemplate() {
 cp ~/dotfiles/template.tex "./$1.tex" && nvim "$1.tex"
 }
@@ -72,6 +77,7 @@ backupdot_with_msg() {
   git add .
   git commit -m "update"
   git push origin master
+  cd -
 
 	cp ~/.config/nvim/init.vim ~/dotfiles
 	cp ~/.bash_aliases ~/dotfiles
@@ -84,9 +90,15 @@ backupdot_with_msg() {
 		git add $p
 	done <~/dotfiles/files_to_backup.txt # list of files/folders to symlink in homedir
 
-	git commit -m "$1"
+	git commit -m "update"
 	git push origin master
 	cd -
+
+  cd ~/scripts
+  git add .
+  git commit -m "update"
+  git push origin master
+  cd -
 }
 
 # Change title of tabs

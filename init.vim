@@ -28,7 +28,7 @@ Plug 'junegunn/vim-plug', { 'on' : [] }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/tpope/vim-fugitive'
 
 Plug 'unblevable/quick-scope'    " Highlight unique character in words for easier 'f/F/t/T' navigation
 
@@ -106,7 +106,7 @@ Plug 'junegunn/vim-slash'
 "Plug 'neomake/neomake'
 Plug 'wellle/targets.vim'
 
-" Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 Plug 'tpope/vim-surround'
 
@@ -152,7 +152,9 @@ Plug 'junegunn/seoul256.vim'
 " Plug 'morhetz/gruvbox'
 " Plug 'https://github.com/davetron5000/java-javadoc-vim'
 
-Plug 'https://github.com/majutsushi/tagbar'
+" Plug 'https://github.com/majutsushi/tagbar'
+" map <localleader>tb :TagBar<cr>
+
 call plug#end()
 """}}}
 
@@ -266,35 +268,6 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " --EasyAlign-- }}}
 
-" Colortheme {{{
-if has('gui_running')
-	" Solarized theme
-	set background=dark
-	let g:solarized_termtrans=1
-	let g:solarized_termcolors=256
-	colorscheme solarized
-else
-	colorscheme jonas_atom
-endif
-
-"Credit joshdick
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
-  if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-endif
-" --Colortheme-- }}}
-
 " autosave session {{{
 " (if sessionfile exists in pwd)
 fu! SaveSess()
@@ -359,8 +332,10 @@ set inccommand=split
 " Long | to separate windows
 " set fillchars+=vert:│
 
-" :set ignorecase
-" :set smartcase
+:set ignorecase
+:set smartcase
+:nnoremap * /\<<C-R>=expand('<cword>')<CR>\><CR>
+:nnoremap # ?\<<C-R>=expand('<cword>')<CR>\><CR>
 
 " Always show statusline
 set laststatus=2
@@ -469,8 +444,8 @@ inoremap <A-S-b> <Esc>Bi
 :nnoremap <localleader>ap2 :AsyncRun python %:p<cr>
 :nnoremap <localleader>ap3 :AsyncRun python3 %:p<cr>
 " Move lines with Ctrl-h, Ctrl-l
-nnoremap <C-h> ddp
-nnoremap <C-l> ddkP
+nnoremap <C-l> ddp
+nnoremap <C-h> ddkP
 
 " Test leader
 :nnoremap <Leader>test oleader<cr><esc>
@@ -602,6 +577,45 @@ inoremap <silent> ^^ ^^<c-r>=UltiSnips#Anon('^{$1}$0', '^^', '', 'i')<cr>
 "-- Completion-- }}}
 
 " LaTex {{{
+
+" Delimiter settings
+let g:vimtex_delim_list = {'mods' : {}}
+let g:vimtex_delim_list.mods.name = [
+	    \ ['\left', '\right'],
+	    \ ['\mleft', '\mright'],
+	    \ ['\bigl', '\bigr'],
+	    \ ['\Bigl', '\Bigr'],
+	    \ ['\biggl', '\biggr'],
+	    \ ['\Biggl', '\Biggr'],
+	    \ ['\big', '\big'],
+	    \ ['\Big', '\Big'],
+	    \ ['\bigg', '\bigg'],
+	    \ ['\Bigg', '\Bigg'],
+	    \]
+let g:vimtex_delim_toggle_mod_list = [
+	    \ ['\big', '\big'],
+	    \ ['\left', '\right'],
+	    \ ['\mleft', '\mright'],
+	    \]
+
+
+" TOC settings
+let g:vimtex_toc_config = {
+      \ 'name' : 'TOC',
+      \ 'layers' : ['content', 'todo', 'include'],
+      \ 'resize' : 1,
+      \ 'split_width' : 50,
+      \ 'todo_sorted' : 0,
+      \ 'show_help' : 1,
+      \ 'show_numbers' : 1,
+      \ 'mode' : 2,
+      \}
+" Open table of content
+augroup vimrc
+  autocmd!
+  autocmd FileType tex nmap <buffer><silent> <localleader>ltt <plug>(vimtex-toc-open)
+augroup END
+
 
 au Filetype tex let tw=100
 au Filetype tex ab beq \begin{equation*}
@@ -870,5 +884,26 @@ command! -nargs=1 Find :call Find("<args>")
 " LanguageTool {{{
 :let g:languagetool_jar='$HOME//Downloads/languagetool/languagetool-standalone/target/LanguageTool-4.6-SNAPSHOT/LanguageTool-4.6-SNAPSHOT/languagetool-commandline.jar'
 " }}}
+
+" Colortheme {{{
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+" colorscheme peachpuff-jonas
+colorscheme jonas_atom
+" --Colortheme-- }}}
 
 " vim:foldmethod=marker:foldlevel=0
