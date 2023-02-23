@@ -62,6 +62,8 @@
   command: 
       if [ "$(uname -s)" = "Linux" ]; then
         pacman -S xclip
+      else
+        brew install xclip
       fi
   stdin: true
   stdout: true
