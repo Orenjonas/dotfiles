@@ -1,10 +1,83 @@
-- clean: ['~']
+- create:
+  - ~/.config
+
+- clean:
+    ~/:
+      force: true
+    ~/.config:
+      recursive: true
 
 - link:
+    ~/.config/fish:
+        force: true
+        path: fish
+    ~/.config/nvim:
+        force: true
+        path: nvim
+    ~/.config/omf:
+        create: false
+        path: omf
+    ~/.config/kitty:
+        create: true
+        path: kitty
+        force: true
     ~/.profile: profile
     ~/.bash_profile: bash_profile
     ~/.bashrc: bashrc
     ~/.gitconfig: gitconfig
     ~/.zshrc: zshrc
 
-
+- shell:
+  - command: |
+      curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    stdin: true
+    stdout: true
+    description: Install the kitty-terminal
+  - 
+    command: |
+      if [ "$(uname -s)" = "Linux" ]; then
+            pacman -S fish
+      else
+            brew install fish
+      fi
+    stdin: true
+    stdout: true
+    description: Install the fish-shell
+  - 
+    command: chsh -s $(which fish)
+    stdin: true
+    stdout: true
+    description: Change default shell to fish 
+  -
+    command: curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+    stdin: false
+    stdout: true
+    description: Download oh-my-fish and run the installer
+  -
+    command: omf install https://github.com/jhillyerd/plugin-git
+    stdin: false
+    stdout: true
+    description: Install the fish git-plugin
+  -
+  command: 
+      if [ "$(uname -s)" = "Linux" ]; then
+        pacman -S xclip
+      fi
+  stdin: true
+  stdout: true
+  description: Install xclip for nvim to yank to clipboard.
+  -
+    command: |
+      if [ "$(uname -s)" = "Linux" ]; then
+      # clone
+        git clone https://github.com/powerline/fonts.git --depth=1
+        # install
+        cd fonts
+        ./install.sh
+        # clean-up a bit
+        cd ..
+        rm -rf fonts
+      fi
+    stdin: true
+    stdout: true
+    description: Install powerline compatible fonts. Remember to select it in the terminal! 
