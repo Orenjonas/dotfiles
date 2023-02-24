@@ -1,0 +1,51 @@
+require("lazy").setup({
+    { "catppuccin/nvim",                 name = "catppuccin" },
+    { "nvim-treesitter/nvim-treesitter", cmd = "TSUpdate" },
+    "feline-nvim/feline.nvim",
+    "folke/neodev.nvim",
+    "tpope/vim-commentary",
+    "tpope/vim-surround",
+    "nvim-tree/nvim-tree.lua",
+    "nvim-tree/nvim-web-devicons",
+    "tpope/vim-fugitive",
+    "lewis6991/gitsigns.nvim",
+    {
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+            { "gbrlsnchs/telescope-lsp-handlers.nvim" }
+        }
+    },
+    {
+        "VonHeikemen/lsp-zero.nvim",
+        branch = "v1.x",
+        dependencies = {
+            -- LSP Support
+            { "neovim/nvim-lspconfig" }, -- Required
+            { "williamboman/mason.nvim" }, -- Optional
+            { "williamboman/mason-lspconfig.nvim" }, -- Optional
+
+            -- Autocompletion
+            { "hrsh7th/nvim-cmp" }, -- Required
+            { "hrsh7th/cmp-nvim-lsp" }, -- Required
+            { "hrsh7th/cmp-buffer" }, -- Optional
+            { "hrsh7th/cmp-path" }, -- Optional
+            { "saadparwaiz1/cmp_luasnip" }, -- Optional
+            { "hrsh7th/cmp-nvim-lua" }, -- Optional
+
+            -- Snippets
+            { "L3MON4D3/LuaSnip" }, -- Required
+            { "rafamadriz/friendly-snippets" }, -- Optional
+        }
+    },
+    "windwp/nvim-autopairs",
+    "RRethy/vim-illuminate",
+    "lukas-reineke/lsp-format.nvim",
+    "folke/trouble.nvim",
+    "mfussenegger/nvim-dap",
+    { "mfussenegger/nvim-dap-python", dependencies = "mfussenegger/nvim-dap" },
+    { "rcarriga/nvim-dap-ui",         dependencies = "mfussenegger/nvim-dap" },
+    "mbbill/undotree",
+}
+)

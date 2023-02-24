@@ -7,6 +7,11 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
+-- For nvim tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
@@ -20,12 +25,11 @@ vim.opt.sidescrolloff = 8
 
 vim.opt.colorcolumn = "80"
 vim.opt.signcolumn = "yes"
-vim.opt.guicursor = ""
+--vim.opt.guicursor = ""
 vim.opt.cursorline = true
 
 vim.opt.list = true
 vim.opt.listchars = "tab:» ,trail:·,nbsp:+"
-vim.opt.termguicolors = true
 
 vim.opt.pumheight = 5
 vim.opt.pumblend = 5
