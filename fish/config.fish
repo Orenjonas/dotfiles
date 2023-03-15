@@ -4,3 +4,4 @@ end
 
 ## Vim keybindings in the terminal
 #fish_vi_key_bindings
+fish_default_key_bindings
