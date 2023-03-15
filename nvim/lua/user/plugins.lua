@@ -37,6 +37,7 @@ require("lazy").setup({
             -- Snippets
             { "L3MON4D3/LuaSnip" }, -- Required
             { "rafamadriz/friendly-snippets" }, -- Optional
+            { "SirVer/ultisnips" }
         }
     },
     "windwp/nvim-autopairs",
@@ -47,5 +48,7 @@ require("lazy").setup({
     { "mfussenegger/nvim-dap-python", dependencies = "mfussenegger/nvim-dap" },
     { "rcarriga/nvim-dap-ui",         dependencies = "mfussenegger/nvim-dap" },
     "mbbill/undotree",
+    "https://github.com/jpalardy/vim-slime",
+    "https://github.com/JamshedVesuna/vim-markdown-preview"
 }
 )

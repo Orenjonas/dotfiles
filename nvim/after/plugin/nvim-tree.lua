@@ -1,4 +1,9 @@
-require("nvim-tree").setup({})
+require("nvim-tree").setup({
+    sync_root_with_cwd = true,
+    prefer_startup_root = true,
+    respect_buf_cwd = true,
+})
+
 
 vim.keymap.set("n", "<leader>nt", "<cmd>NvimTreeFocus<cr>")
 
