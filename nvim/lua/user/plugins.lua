@@ -49,6 +49,7 @@ require("lazy").setup({
     { "rcarriga/nvim-dap-ui",         dependencies = "mfussenegger/nvim-dap" },
     "mbbill/undotree",
     "https://github.com/jpalardy/vim-slime",
-    "https://github.com/JamshedVesuna/vim-markdown-preview"
+    "https://github.com/JamshedVesuna/vim-markdown-preview",
+    "Vonr/align.nvim"
 }
 )

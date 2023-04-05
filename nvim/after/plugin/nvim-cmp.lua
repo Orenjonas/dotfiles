@@ -1,5 +1,7 @@
 local cmp = require 'cmp'
 
+vim.keymap.set("i", "<cr>", "<c-e><cr>", { silent = true })
+
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -20,6 +22,26 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false }), -- Set `select` to `false` to only confirm explicitly selected items.
+
+        -- ['<CR>'] = function(fallback)
+        --     -- Don't block <CR> if signature help is active
+        --     -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/13
+        --     if not cmp.visible() or not cmp.get_selected_entry() or cmp.get_selected_entry().source.name == 'nvim_lsp_signature_help' then
+        --         fallback()
+        --     else
+        --         cmp.confirm({
+        --             -- Replace word if completing in the middle of a word
+        --             -- https://github.com/hrsh7th/nvim-cmp/issues/664
+        --             behavior = cmp.ConfirmBehavior.Replace,
+        --             -- Don't select first item on CR if nothing was selected
+        --             select = false,
+        --         })
+        --     end
+        -- end
+
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -41,27 +63,27 @@ cmp.setup.filetype('gitcommit', {
     })
 })
 
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'buffer' }
-    }
-})
+-- -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline({ '/', '?' }, {
+--     mapping = cmp.mapping.preset.cmdline(),
+--     sources = {
+--         { name = 'buffer' }
+--     }
+-- })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
-})
+-- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline(':', {
+--     mapping = cmp.mapping.preset.cmdline(),
+--     sources = cmp.config.sources({
+--         { name = 'path' }
+--     }, {
+--         { name = 'cmdline' }
+--     })
+-- })
 
--- Set up lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-    capabilities = capabilities
-}
+-- -- Set up lspconfig.
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+-- require('lspconfig').setup {
+--     -- capabilities = capabilities
+-- }
