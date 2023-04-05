@@ -1,0 +1,2 @@
+Fix for text highlighting in iPython error output making text unreadable:
+https://github.com/ipython/ipython/issues/13446#issuecomment-1019554760
