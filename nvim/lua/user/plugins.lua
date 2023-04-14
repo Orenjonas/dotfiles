@@ -52,7 +52,5 @@ require("lazy").setup({
     "https://github.com/jpalardy/vim-slime",
     "https://github.com/JamshedVesuna/vim-markdown-preview",
     "Vonr/align.nvim",
-    -- "lervag/vimtex",
-    -- "vim-easyclip",
 }
 )
