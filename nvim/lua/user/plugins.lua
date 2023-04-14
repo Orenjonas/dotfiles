@@ -5,6 +5,7 @@ require("lazy").setup({
     "folke/neodev.nvim",
     "tpope/vim-commentary",
     "tpope/vim-surround",
+    "tpope/vim-repeat",
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "tpope/vim-fugitive",
@@ -22,20 +23,20 @@ require("lazy").setup({
         branch = "v1.x",
         dependencies = {
             -- LSP Support
-            { "neovim/nvim-lspconfig" }, -- Required
-            { "williamboman/mason.nvim" }, -- Optional
+            { "neovim/nvim-lspconfig" },             -- Required
+            { "williamboman/mason.nvim" },           -- Optional
             { "williamboman/mason-lspconfig.nvim" }, -- Optional
 
             -- Autocompletion
-            { "hrsh7th/nvim-cmp" }, -- Required
-            { "hrsh7th/cmp-nvim-lsp" }, -- Required
-            { "hrsh7th/cmp-buffer" }, -- Optional
-            { "hrsh7th/cmp-path" }, -- Optional
+            { "hrsh7th/nvim-cmp" },         -- Required
+            { "hrsh7th/cmp-nvim-lsp" },     -- Required
+            { "hrsh7th/cmp-buffer" },       -- Optional
+            { "hrsh7th/cmp-path" },         -- Optional
             { "saadparwaiz1/cmp_luasnip" }, -- Optional
-            { "hrsh7th/cmp-nvim-lua" }, -- Optional
+            { "hrsh7th/cmp-nvim-lua" },     -- Optional
 
             -- Snippets
-            { "L3MON4D3/LuaSnip" }, -- Required
+            { "L3MON4D3/LuaSnip" },             -- Required
             { "rafamadriz/friendly-snippets" }, -- Optional
             { "SirVer/ultisnips" }
         }
@@ -50,6 +51,8 @@ require("lazy").setup({
     "mbbill/undotree",
     "https://github.com/jpalardy/vim-slime",
     "https://github.com/JamshedVesuna/vim-markdown-preview",
-    "Vonr/align.nvim"
+    "Vonr/align.nvim",
+    -- "lervag/vimtex",
+    -- "vim-easyclip",
 }
 )
