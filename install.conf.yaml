@@ -25,18 +25,23 @@
     ~/.bash_profile: bash_profile
     ~/.bashrc: bashrc
     ~/.gitconfig: gitconfig
-    ~/.zshrc: zshrc
 
 - shell:
-  - command: |
-      curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+  # sudo apt install python3-pip
+  # python3 -m pip install --user --upgrade pynvim
+  # sudo apt install g++[]
+  # sudo apt install nodejs npma
+  # curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+  -
+    command: |
+      apt install kitty
     stdin: true
     stdout: true
     description: Install the kitty-terminal
   - 
     command: |
       if [ "$(uname -s)" = "Linux" ]; then
-            pacman -S fish
+            apt install fish
       else
             brew install fish
       fi
@@ -59,27 +64,17 @@
     stdout: true
     description: Install the fish git-plugin
   -
-  command: 
-      if [ "$(uname -s)" = "Linux" ]; then
-        pacman -S xclip
-      else
-        brew install xclip
-      fi
+  command: |
+    if [ "$(uname -s)" = "Linux" ]; then
+    # clone
+    git clone https://github.com/powerline/fonts.git --depth=1
+    # install
+    cd fonts
+    ./install.sh
+    # clean-up a bit
+    cd ..
+    rm -rf fonts
+    fi
   stdin: true
   stdout: true
-  description: Install xclip for nvim to yank to clipboard.
-  -
-    command: |
-      if [ "$(uname -s)" = "Linux" ]; then
-      # clone
-        git clone https://github.com/powerline/fonts.git --depth=1
-        # install
-        cd fonts
-        ./install.sh
-        # clean-up a bit
-        cd ..
-        rm -rf fonts
-      fi
-    stdin: true
-    stdout: true
-    description: Install powerline compatible fonts. Remember to select it in the terminal! 
+  description: Install powerline compatible fonts. Remember to select it in the terminal! 
