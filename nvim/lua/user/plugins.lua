@@ -38,7 +38,7 @@ require("lazy").setup({
             -- Snippets
             { "L3MON4D3/LuaSnip" },             -- Required
             { "rafamadriz/friendly-snippets" }, -- Optional
-            { "SirVer/ultisnips" }
+            -- { "SirVer/ultisnips" }
         }
     },
     "windwp/nvim-autopairs",
@@ -52,5 +52,14 @@ require("lazy").setup({
     "https://github.com/jpalardy/vim-slime",
     "https://github.com/JamshedVesuna/vim-markdown-preview",
     "Vonr/align.nvim",
+    {
+        "mcchrish/zenbones.nvim",
+        -- Optionally install Lush. Allows for more configuration or extending the colorscheme
+        -- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+        -- In Vim, compat mode is turned on as Lush only works in Neovim.
+        dependencies = "rktjmp/lush.nvim"
+    },
+    { "lukas-reineke/indent-blankline.nvim" },
+    "ellisonleao/gruvbox.nvim",
 }
 )
