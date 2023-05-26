@@ -57,7 +57,6 @@ local cmp = require 'cmp'
 local cmp_action = require('lsp-zero').cmp_action()
 local luasnip = require "luasnip"
 
-vim.keymap.set("i", "<cr>", "<c-e><cr>", { silent = true })
 require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
