@@ -97,6 +97,8 @@ vim.keymap.set( "n", "k", "gk" )
 vim.keymap.set( "n", "<leader>v", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true } )
 -- Yank all buffer
 vim.keymap.set( "n", "<leader>A", "<cmd>%y<CR>" )
+-- Visual all buffer
+vim.keymap.set( "n", "ggVG", "<cmd>%y<CR>" )
 -- -- Make undo stop on these symbols
 -- vim.keymap.set( "i", ",", ",<C-g>u" )
 -- vim.keymap.set( "i", ".", ".<C-g>u" )
@@ -129,83 +131,9 @@ vim.keymap.set( "x", "<leader>rs", '"sy:let @/=@s<CR>cgn' )
 
 -- -- Text-objects
 -- -- https://thevaluable.dev/vim-create-text-objects/
--- local chars = { "_", ".", ":", ",", ";", "|", "/", "\\", "*", "+", "%", "`", "?" }
 
--- for _, char in ipairs(chars) do
---   for _, mode in ipairs { "x", "o" } do
---     utils.map(mode, "i" .. char, string.format(":<C-u>silent! normal! f%sF%slvt%s<CR>", char, char, char))
---     utils.map(mode, "a" .. char, string.format(":<C-u>silent! normal! f%sF%svf%s<CR>", char, char, char))
---   end
--- end
-
--- Indent as text object (select inside and around indent)
-function select_indent(around)
-    local start_indent = vim.fn.indent(vim.fn.line('.'))
-    local blank_line_pattern = '^%s*$'
-
-    if string.match(vim.fn.getline('.'), blank_line_pattern) then
-        return
-    end
-
-    if vim.v.count > 0 then
-        start_indent = start_indent - vim.o.shiftwidth * (vim.v.count - 1)
-        if start_indent < 0 then
-            start_indent = 0
-        end
-    end
-
-    local prev_line = vim.fn.line('.') - 1
-    local prev_blank_line = function(line) return string.match(vim.fn.getline(line), blank_line_pattern) end
-    while prev_line > 0 and (prev_blank_line(prev_line) or vim.fn.indent(prev_line) >= start_indent) do
-        vim.cmd('-')
-        prev_line = vim.fn.line('.') - 1
-    end
-    if around then
-        vim.cmd('-')
-    end
-
-    vim.cmd('normal! 0V')
-
-    local next_line = vim.fn.line('.') + 1
-    local next_blank_line = function(line) return string.match(vim.fn.getline(line), blank_line_pattern) end
-    local last_line = vim.fn.line('$')
-    while next_line <= last_line and (next_blank_line(next_line) or vim.fn.indent(next_line) >= start_indent) do
-        vim.cmd('+')
-        next_line = vim.fn.line('.') + 1
-    end
-    if around then
-        vim.cmd('+')
-    end
-end
-
-function select_indent()
-    local start_indent = vim.fn.indent(vim.fn.line('.'))
-    local prev_line = vim.fn.line('.') - 1
-
-    while prev_line > 0 and vim.fn.indent(prev_line) >= start_indent do
-        vim.cmd('-')
-        prev_line = vim.fn.line('.') - 1
-    end
-
-    vim.cmd('normal! 0V')
-
-    local next_line = vim.fn.line('.') + 1
-    local last_line = vim.fn.line('$')
-    while next_line <= last_line and vim.fn.indent(next_line) >= start_indent do
-        vim.cmd('+')
-        next_line = vim.fn.line('.') + 1
-    end
-end
-
--- function indent_text_objects()
-for _,mode in ipairs({ 'x', 'o' }) do
-    vim.api.nvim_set_keymap(mode, 'ii', ':<c-u>lua select_indent()<cr>', { noremap = true, silent = true })
-    vim.api.nvim_set_keymap(mode, 'ai', ':<c-u>lua select_indent()<cr>', { noremap = true, silent = true })
-end
--- end
-
-return {
-    indent_text_objects = indent_text_objects,
-}
+-- Python multiline string as text object
+vim.keymap.set("x", "im", '<esc>w?"""<cr>elvNh')
+vim.keymap.set("o", "im", '<esc>w?"""<cr>elvNh')
 
 
