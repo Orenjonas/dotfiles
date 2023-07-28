@@ -100,5 +100,7 @@ require("lazy").setup({
             },
         },
     },
+    "tommcdo/vim-exchange",
+    "wellle/targets.vim",
 }
 )
