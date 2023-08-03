@@ -8,6 +8,7 @@ require("lazy").setup({
     "tpope/vim-repeat",
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
+    "ryanoasis/vim-devicons",
     "tpope/vim-fugitive",
     "lewis6991/gitsigns.nvim",
     {

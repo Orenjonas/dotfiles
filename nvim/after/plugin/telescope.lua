@@ -10,6 +10,10 @@ vim.keymap.set('n', '<leader>ps', function()
 end)
 vim.keymap.set('n', '<leader>bs', builtin.current_buffer_fuzzy_find, {})
 
+vim.keymap.set('n', '<leader>ts', builtin.builtin, {})
+vim.keymap.set('n', '<leader>bb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>cm', builtin.commands, {})
+
 require("telescope").setup({
     extensions = {
         lsp_handlers = {
