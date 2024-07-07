@@ -1,9 +1,9 @@
 require('nvim-treesitter.configs').setup {
     -- A list of parser names, or "all" (the four listed parsers should always be installed)
-    ensure_installed = { "c", "lua", "vim", "help", "python", "fish" },
+    ensure_installed = { "c", "lua", "vim", "python", "fish" },
 
-    indent = {             
-        enable = true,       
+    indent = {
+        enable = true,
         disable = { "yaml", "python" },
     },
 
@@ -23,4 +23,17 @@ require('nvim-treesitter.configs').setup {
         -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
     },
+}
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.sql_bigquery = {
+    install_info = {
+        url = "~/projects/tree-sitter-sql-bigquery", -- local path or git repo
+        files = { "src/parser.c", "src/scanner.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
+        -- optional entries:
+        branch = "main",                             -- default branch in case of git repo if different from master
+        generate_requires_npm = true,                -- if stand-alone parser without npm dependencies
+        requires_generate_from_grammar = true,       -- if folder contains pre-generated src/parser.c
+    },
+    filetype = "sql",                                -- if filetype does not match the parser name
 }

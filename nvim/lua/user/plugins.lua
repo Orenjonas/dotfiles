@@ -1,9 +1,29 @@
 require("lazy").setup({
-    { "catppuccin/nvim",                 name = "catppuccin" },
+    -- { "catppuccin/nvim",                 name = "catppuccin" },
+    "marko-cerovac/material.nvim",
+    "EdenEast/nightfox.nvim",
+    "nvim-lualine/lualine.nvim",
+    "navarasu/onedark.nvim",
+    { "catppuccin/nvim",                 name = "catppuccin", priority = 1000 },
     { "nvim-treesitter/nvim-treesitter", cmd = "TSUpdate" },
-    "feline-nvim/feline.nvim",
+    -- {
+    -- -- 'freddiehaddad/feline.nvim',
+    -- opts = {},
+    -- config = function(_, opts)
+    --     require('feline').setup()
+    --     require('feline').winbar.setup() -- to use winbar
+    --     -- require('feline').statuscolumn.setup() -- to use statuscolumn
+    --     --
+    --     --     -- require('feline').use_theme()          -- to use a custom theme
+    -- end
+    -- },
     "folke/neodev.nvim",
-    "tpope/vim-commentary",
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        }
+    },
     "tpope/vim-surround",
     "tpope/vim-repeat",
     "nvim-tree/nvim-tree.lua",
@@ -42,11 +62,30 @@ require("lazy").setup({
             -- { "SirVer/ultisnips" }
         }
     },
+    -- "mfussenegger/nvim-lint",
+    { "nvimtools/none-ls.nvim" },
+    -- {
+    --     "jay-babu/mason-null-ls.nvim",
+    --     event = { "BufReadPre", "BufNewFile" },
+    --     dependencies = {
+    --         "williamboman/mason.nvim",
+    --         "nvimtools/none-ls.nvim",
+    --     },
+    --     -- config = function()
+    --     --     require("your.null-ls.config") -- require your null-ls config here (example below)
+    --     -- end,
+    -- },
+    -- {
+    --     "nvimtools/none-ls.nvim",
+    --     dependencies = {
+    --         "nvimtools/none-ls-extras.nvim",
+    --     },
+    -- },
     "windwp/nvim-autopairs",
     "RRethy/vim-illuminate",
     "lukas-reineke/lsp-format.nvim",
     "folke/trouble.nvim",
-    "mfussenegger/nvim-dap",
+    -- "mfussenegger/nvim-dap",
     { "mfussenegger/nvim-dap-python", dependencies = "mfussenegger/nvim-dap" },
     { "rcarriga/nvim-dap-ui",         dependencies = "mfussenegger/nvim-dap" },
     "mbbill/undotree",
@@ -60,48 +99,67 @@ require("lazy").setup({
         -- In Vim, compat mode is turned on as Lush only works in Neovim.
         dependencies = "rktjmp/lush.nvim"
     },
-    { "lukas-reineke/indent-blankline.nvim" },
-    { 
+    {
         "danymat/neogen", -- annotation generator
-        dependencies = "nvim-treesitter/nvim-treesitter", 
+        dependencies = "nvim-treesitter/nvim-treesitter",
         config = true,
         -- Uncomment next line if you want to follow only stable versions
-        -- version = "*" 
+        -- version = "*"
     },
-    {'lervag/vimtex', lazy=false},
+    -- { 'lervag/vimtex',                       lazy = true },
     "ellisonleao/gruvbox.nvim",
     -- {"c0r73x/neotags.lua", build="make"}
     "ludovicchabant/vim-gutentags",
+    -- {
+    --     "kiyoon/treesitter-indent-object.nvim",
+    --     keys = {
+    --         {
+    --             "ai",
+    --             "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>",
+    --             mode = { "x", "o" },
+    --             desc = "Select context-aware indent (outer)",
+    --         },
+    --         {
+    --             "aI",
+    --             "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>",
+    --             mode = { "x", "o" },
+    --             desc = "Select context-aware indent (outer, line-wise)",
+    --         },
+    --         {
+    --             "ii",
+    --             "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>",
+    --             mode = { "x", "o" },
+    --             desc = "Select context-aware indent (inner, partial range)",
+    --         },
+    --         {
+    --             "iI",
+    --             "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>",
+    --             mode = { "x", "o" },
+    --             desc = "Select context-aware indent (inner, entire range)",
+    --         },
+    --     },
+    -- },
     {
-        "kiyoon/treesitter-indent-object.nvim",
-        keys = {
-            {
-                "ai",
-                "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>",
-                mode = {"x", "o"},
-                desc = "Select context-aware indent (outer)",
-            },
-            {
-                "aI",
-                "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>",
-                mode = {"x", "o"},
-                desc = "Select context-aware indent (outer, line-wise)",
-            },
-            {
-                "ii",
-                "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>",
-                mode = {"x", "o"},
-                desc = "Select context-aware indent (inner, partial range)",
-            },
-            {
-                "iI",
-                "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>",
-                mode = {"x", "o"},
-                desc = "Select context-aware indent (inner, entire range)",
-            },
-        },
+        "lukas-reineke/indent-blankline.nvim",
+        -- tag = "v2.20.8", -- Use v2
+        event = "BufReadPost",
+        -- config = function()
+        --     vim.opt.list = true
+        --     require("indent_blankline").setup {
+        --         space_char_blankline = " ",
+        --         show_current_context = true,
+        --         show_current_context_start = true,
+        --     }
+        -- end,
+        main = "ibl",
+        opts = {}
     },
     "tommcdo/vim-exchange",
     "wellle/targets.vim",
+    {
+        'stevearc/conform.nvim',
+        opts = {},
+    }
+    , { "zbirenbaum/copilot.lua", lazy = true }
 }
 )

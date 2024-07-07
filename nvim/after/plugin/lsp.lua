@@ -51,15 +51,79 @@ lsp.on_attach(function(client, buffer_number)
     vim.keymap.set("i", "<c-p>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
+-- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+lsp.format_mapping('<leader>g', {
+    format_opts = {
+        async = false,
+        timeout_ms = 10000,
+    },
+    servers = {
+        ['null-ls'] = { 'sql' }
+    }
+})
+
 lsp.setup()
 
 
 -- Completion
 local cmp = require 'cmp'
-local cmp_action = require('lsp-zero').cmp_action()
+-- local cmp_action = require('lsp-zero').cmp_action()
 local luasnip = require "luasnip"
 
+
+local null_ls = require("null-ls")
+local null_opts = lsp.build_options('null-ls', {})
+
+null_ls.setup({
+    on_attach = function(client, bufnr)
+        null_opts.on_attach(client, bufnr)
+    end,
+    sources = {
+        null_ls.builtins.formatting.sqlfluff,
+        null_ls.builtins.diagnostics.sqlfluff,
+    }
+})
+--
+null_ls.setup({
+    ensure_installed = { "sqlfluff" },
+    --     sources = {
+    --         null_ls.builtins.formatting.stylua,
+    --         null_ls.builtins.diagnostics.eslint,
+    --         null_ls.builtins.completion.spell,
+    --         require("none-ls.diagnostics.eslint_d"),
+    --         require("none-ls.diagnostics.cpplint"),
+    --         require("none-ls.formatting.jq"),
+    --         require("none-ls.code_actions.eslint"),
+    --     },
+})
+--
+-- require("mason-null-ls").setup({
+--     ensure_installed = { "sqlfluff" },
+--     methods = {
+--         diagnostics = true,
+--         formatting = true,
+--         code_actions = true,
+--         completion = true,
+--         hover = true,
+--     },
+-- })
+--
+local sources = {
+    null_ls.builtins.diagnostics.sqlfluff.with({
+        extra_args = { "--dialect", "bigquery" }, -- change to your dialect
+    }),
+}
+
 require('luasnip.loaders.from_vscode').lazy_load()
+
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.omnifunc.setup({
+    tabcomplete = true,
+    use_fallback = true,
+    update_on_delete = true,
+})
 
 cmp.setup({
     snippet = {
@@ -72,49 +136,51 @@ cmp.setup({
         end,
     },
     window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ['<CR>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false }), -- Set `select` to `false` to only confirm explicitly selected items.
-            ["<c-k>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
+            select = false
+        }), -- Set `select` to `false` to only confirm explicitly selected items.
+        ["<c-k>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
-            ["<c-j>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
+        ["<c-j>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
-        }),
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            -- { name = 'vsnip' }, -- For vsnip users.
-            { name = 'luasnip' }, -- For luasnip users.
-            -- { name = 'ultisnips' }, -- For ultisnips users.
-            -- { name = 'snippy' }, -- For snippy users.
-        }, {
-            { name = 'buffer' },
-        })
+    }),
+    sources = cmp.config.sources({
+        { name = 'path' },
+        { name = 'nvim_lsp' },
+        -- { name = 'vsnip' }, -- For vsnip users.
+        { name = 'luasnip' }, -- For luasnip users.
+        -- { name = 'ultisnips' }, -- For ultisnips users.
+        -- { name = 'snippy' }, -- For snippy users.
+    }, {
+        { name = 'buffer' },
     })
+})
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
@@ -179,4 +245,59 @@ require("luasnip.loaders.from_vscode").load({ include = { "python" } }) -- Load 
 --     end,
 -- },
 -- })
+--
+--
 
+
+-- Diagnostics
+local util = require 'lspconfig.util'
+local lsp = vim.lsp
+
+local function fix_all(opts)
+    opts = opts or {}
+
+    local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'eslint')
+    if eslint_lsp_client == nil then
+        return
+    end
+
+    local request
+    if opts.sync then
+        request = function(bufnr, method, params)
+            eslint_lsp_client.request_sync(method, params, nil, bufnr)
+        end
+    else
+        request = function(bufnr, method, params)
+            eslint_lsp_client.request(method, params, nil, bufnr)
+        end
+    end
+
+    local bufnr = util.validate_bufnr(opts.bufnr or 0)
+    request(0, 'workspace/executeCommand', {
+        command = 'eslint.applyAllFixes',
+        arguments = {
+            {
+                uri = vim.uri_from_bufnr(bufnr),
+                version = lsp.util.buf_versions[bufnr],
+            },
+        },
+    })
+end
+
+
+-- Diagnostics
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true
+})
+
+-- Disable ESLint LSP server and hide virtual text in Neovim
+-- Add this to your init.lua or init.vim file
+local isLspDiagnosticsVisible = true
+vim.keymap.set("n", "<leader>lx", function()
+    isLspDiagnosticsVisible = not isLspDiagnosticsVisible
+    vim.diagnostic.config({
+        virtual_text = isLspDiagnosticsVisible,
+        underline = isLspDiagnosticsVisible
+    })
+end)

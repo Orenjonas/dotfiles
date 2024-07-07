@@ -1,4 +1,13 @@
--- Control v to comment our lines
-vim.keymap.set("v", "<A-/>", ":Commentary<CR>`>j")
-vim.keymap.set("i", "<A-/>", "<ESC>:Commentary<CR>j")
-vim.keymap.set("n", "<A-/>", ":Commentary<CR>j")
+-- TODO: Removed
+-- -- Control v to comment our lines
+-- vim.keyEdenEast/nightfox.nvimmap.set("v", "<A-/>", ":Commentary<CR>`>j")
+-- vim.keymap.set("i", "<A-/>", "<ESC>:Commentary<CR>j")
+-- vim.keymap.set("n", "<A-/>", ":Commentary<CR>j")
+--
+-- vim.api.nvim_create_autocmd('FileType', {
+--     pattern = { '*.sql' },
+--     callback = function()
+--         vim.bo.commentstring = '--%s'
+--     end,
+--     group = generalSettingsGroup,
+-- })
