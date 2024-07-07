@@ -119,12 +119,6 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 local lsp_zero = require('lsp-zero')
 
-lsp_zero.omnifunc.setup({
-    tabcomplete = true,
-    use_fallback = true,
-    update_on_delete = true,
-})
-
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
