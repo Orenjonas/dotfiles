@@ -7,6 +7,7 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 vim.opt.termguicolors = true
 
@@ -21,8 +22,8 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8 -- Start scrolling 10 lines before edge of viewpoint
 vim.opt.sidescrolloff = 8
 
-vim.opt.colorcolumn = "80"
-vim.opt.signcolumn = "yes"
+-- vim.opt.colorcolumn = "80"
+vim.opt.signcolumn = "number"
 vim.opt.guicursor = "i-ci:ver30-iCursor-blinkwait300-blinkon200-blinkoff150"
 -- guicursor = "", -- Fix for mysterious 'q' letters
 vim.opt.cursorline = true

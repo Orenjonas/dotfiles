@@ -111,7 +111,8 @@ null_ls.setup({
 --
 local sources = {
     null_ls.builtins.diagnostics.sqlfluff.with({
-        extra_args = { "--dialect", "bigquery" }, -- change to your dialect
+        -- extra_args = { "--dialect", "bigquery" }, -- change to your dialect
+        extra_args = { "--config", "setup.cfg" }, -- change to your dialect
     }),
 }
 

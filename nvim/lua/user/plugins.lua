@@ -91,7 +91,6 @@ require("lazy").setup({
     "mbbill/undotree",
     "https://github.com/jpalardy/vim-slime",
     "https://github.com/JamshedVesuna/vim-markdown-preview",
-    "Vonr/align.nvim",
     {
         "mcchrish/zenbones.nvim",
         -- Optionally install Lush. Allows for more configuration or extending the colorscheme
@@ -139,27 +138,28 @@ require("lazy").setup({
     --         },
     --     },
     -- },
+    'michaeljsmith/vim-indent-object',
     {
         "lukas-reineke/indent-blankline.nvim",
-        -- tag = "v2.20.8", -- Use v2
+        tag = "v2.20.8", -- Use v2
         event = "BufReadPost",
-        -- config = function()
-        --     vim.opt.list = true
-        --     require("indent_blankline").setup {
-        --         space_char_blankline = " ",
-        --         show_current_context = true,
-        --         show_current_context_start = true,
-        --     }
-        -- end,
+        config = function()
+            vim.opt.list = true
+            require("indent_blankline").setup {
+                space_char_blankline = " ",
+                show_current_context = true,
+                show_current_context_start = true,
+            }
+        end,
         main = "ibl",
         opts = {}
     },
     "tommcdo/vim-exchange",
     "wellle/targets.vim",
-    {
-        'stevearc/conform.nvim',
-        opts = {},
-    }
-    , { "zbirenbaum/copilot.lua", lazy = true }
+    { 'stevearc/conform.nvim',  opts = {}, },
+    { "zbirenbaum/copilot.lua", lazy = true },
+    { 'Vonr/align.nvim',        branch = "v2", lazy = true, },
+    "jidn/vim-dbml",
+    { 'kevinhwang91/nvim-ufo', dependencies = { 'kevinhwang91/promise-async' } }
 }
 )
