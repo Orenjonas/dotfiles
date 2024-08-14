@@ -66,7 +66,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 
-vim.opt.clipboard = 'unnamedplus'
 
 -- Yank to windows clipboard in WSL
 -- if vim.fn.has("wsl") == 1 then
@@ -92,6 +91,9 @@ vim.opt.clipboard = 'unnamedplus'
 --     end
 -- end
 --
+
+-- vim.opt.clipboard = 'unnamedplus'
+
 -- Use system clipboard / WSL fix
 if vim.fn.has('wsl') == 1 then
     vim.g.clipboard = {
