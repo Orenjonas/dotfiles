@@ -63,24 +63,19 @@ require("lazy").setup({
         }
     },
     -- "mfussenegger/nvim-lint",
-    { "nvimtools/none-ls.nvim" },
-    -- {
-    --     "jay-babu/mason-null-ls.nvim",
-    --     event = { "BufReadPre", "BufNewFile" },
-    --     dependencies = {
-    --         "williamboman/mason.nvim",
-    --         "nvimtools/none-ls.nvim",
-    --     },
-    --     -- config = function()
-    --     --     require("your.null-ls.config") -- require your null-ls config here (example below)
-    --     -- end,
-    -- },
-    -- {
-    --     "nvimtools/none-ls.nvim",
-    --     dependencies = {
-    --         "nvimtools/none-ls-extras.nvim",
-    --     },
-    -- },
+    {
+        "jay-babu/mason-null-ls.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "williamboman/mason.nvim",
+            "nvimtools/none-ls.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvimtools/none-ls-extras.nvim",
+        },
+        -- config = function()
+        --     require("your.null-ls.config") -- require your null-ls config here (example below)
+        -- end,
+    },
     "windwp/nvim-autopairs",
     "RRethy/vim-illuminate",
     "lukas-reineke/lsp-format.nvim",

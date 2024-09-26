@@ -92,15 +92,19 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 -- end
 --
 
--- vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 
 -- Use system clipboard / WSL fix
+--  You need to edit powershell confic to expose UTF-8 encoding: https://medium.com/@socrateslee/unix-pipe-to-clipboard-with-wsl-and-in-utf-8-45f51f1ac81e
+--      Add `chcp 65001 |  Out-Null` to powershell profile (check $PROFILE in Powershell, probably path is `C:\Users\\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`)
+--      You might need to change
 if vim.fn.has('wsl') == 1 then
     vim.g.clipboard = {
         name = 'WslClipboard',
         copy = {
-            ['+'] = 'clip.exe',
-            ['*'] = 'clip.exe',
+            -- For powershell 5.1. (Powershell 7.x use 'pwsh.exe -Command clip.exe')
+            ['+'] = 'powershell.exe -Command clip.exe',
+            ['*'] = 'powershell.exe -Command clip.exe',
         },
         paste = {
             ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',

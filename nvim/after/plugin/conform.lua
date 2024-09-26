@@ -7,6 +7,7 @@ require("conform").setup({
         javascript = { { "prettierd", "prettier" } },
         -- sql = { "sql_formatter" }
         sql = { "sleek" }
+        -- sql = { "sqlfluff" }
     },
     -- formatters = {
     --     sql_formatter = {
@@ -35,7 +36,7 @@ require("conform").setup({
 })
 
 -- Shortcut to format buffer
-vim.keymap.set({ "n", "v" }, "<leader>f", function()
+vim.keymap.set({ "n", "v" }, "<leader>fm", function()
     require("conform").format({ async = true, lsp_fallback = true }, function(err)
         if not err then
             -- If we formatted in visual mode, escape to normal mode after formatting

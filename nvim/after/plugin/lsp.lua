@@ -75,46 +75,70 @@ local luasnip = require "luasnip"
 local null_ls = require("null-ls")
 local null_opts = lsp.build_options('null-ls', {})
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 null_ls.setup({
     on_attach = function(client, bufnr)
         null_opts.on_attach(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = augroup,
+                buffer = bufnr,
+                callback = function()
+                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                    -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                    -- vim.lsp.buf.formatting_sync()
+                    vim.lsp.buf.format({
+                        async = false,
+                        -- filter = function(client)
+                        --     return client.name == "null-ls"
+                        -- end
+                    })
+                    -- vim.lsp.buf.format({ bufnr = bufnr })
+                end,
+            })
+        end
     end,
     sources = {
-        null_ls.builtins.formatting.sqlfluff,
         null_ls.builtins.diagnostics.sqlfluff,
-    }
-})
---
-null_ls.setup({
-    ensure_installed = { "sqlfluff" },
-    --     sources = {
-    --         null_ls.builtins.formatting.stylua,
-    --         null_ls.builtins.diagnostics.eslint,
-    --         null_ls.builtins.completion.spell,
-    --         require("none-ls.diagnostics.eslint_d"),
-    --         require("none-ls.diagnostics.cpplint"),
-    --         require("none-ls.formatting.jq"),
-    --         require("none-ls.code_actions.eslint"),
-    --     },
-})
---
--- require("mason-null-ls").setup({
---     ensure_installed = { "sqlfluff" },
---     methods = {
---         diagnostics = true,
---         formatting = true,
---         code_actions = true,
---         completion = true,
---         hover = true,
---     },
--- })
---
-local sources = {
-    null_ls.builtins.diagnostics.sqlfluff.with({
+        -- null_ls.builtins.diagnostics.sqlfluff.with({
+        --     extra_args = { "--dialect", "tsql" }, -- change to your dialect
+        -- }),
+        null_ls.builtins.formatting.sqlfluff,
+        -- null_ls.builtins.formatting.sqlfluff.with({
+        -- filetypes = { "sql" },
+        -- extra_args = { "--config", "setup.cfg" },
         -- extra_args = { "--dialect", "bigquery" }, -- change to your dialect
-        extra_args = { "--config", "setup.cfg" }, -- change to your dialect
-    }),
-}
+        -- extra_args = { "--dialect", "tsql" }, -- change to your dialect
+        -- extra_args = { "--config", "~/.dotfiles/nvim/tsql_setup.cfg" },
+        -- }),
+        -- null_ls.builtins.formatting.stylua,
+        -- null_ls.builtins.diagnostics.eslint,
+        --         null_ls.builtins.completion.spell,
+        -- require("none-ls.diagnostics.eslint_d"),
+        --         require("none-ls.diagnostics.cpplint"),
+        --         require("none-ls.formatting.jq"),
+        require("none-ls.code_actions.eslint"),
+    },
+    ensure_installed = { "sqlfluff" },
+    methods = {
+        diagnostics = true,
+        formatting = true,
+        -- code_actions = true,
+        completion = true,
+        hover = true,
+    },
+})
+
+
+--
+-- local sources = {
+--     null_ls.builtins.diagnostics.sqlfluff.with({
+--         -- extra_args = { "--dialect", "bigquery" }, -- change to your dialect
+--         extra_args = { "--config", "setup.cfg" }, -- change to your dialect
+--     }),
+-- }
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
@@ -248,36 +272,36 @@ require("luasnip.loaders.from_vscode").load({ include = { "python" } }) -- Load 
 local util = require 'lspconfig.util'
 local lsp = vim.lsp
 
-local function fix_all(opts)
-    opts = opts or {}
-
-    local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'eslint')
-    if eslint_lsp_client == nil then
-        return
-    end
-
-    local request
-    if opts.sync then
-        request = function(bufnr, method, params)
-            eslint_lsp_client.request_sync(method, params, nil, bufnr)
-        end
-    else
-        request = function(bufnr, method, params)
-            eslint_lsp_client.request(method, params, nil, bufnr)
-        end
-    end
-
-    local bufnr = util.validate_bufnr(opts.bufnr or 0)
-    request(0, 'workspace/executeCommand', {
-        command = 'eslint.applyAllFixes',
-        arguments = {
-            {
-                uri = vim.uri_from_bufnr(bufnr),
-                version = lsp.util.buf_versions[bufnr],
-            },
-        },
-    })
-end
+-- local function fix_all(opts)
+--     opts = opts or {}
+--
+--     local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'sqlfluff')
+--     if eslint_lsp_client == nil then
+--         return
+--     end
+--
+--     local request
+--     if opts.sync then
+--         request = function(bufnr, method, params)
+--             eslint_lsp_client.request_sync(method, params, nil, bufnr)
+--         end
+--     else
+--         request = function(bufnr, method, params)
+--             eslint_lsp_client.request(method, params, nil, bufnr)
+--         end
+--     end
+--
+--     local bufnr = util.validate_bufnr(opts.bufnr or 0)
+--     request(0, 'workspace/executeCommand', {
+--         command = 'sqlfluff.applyAllFixes',
+--         arguments = {
+--             {
+--                 uri = vim.uri_from_bufnr(bufnr),
+--                 version = lsp.util.buf_versions[bufnr],
+--             },
+--         },
+--     })
+-- end
 
 
 -- Diagnostics
@@ -296,3 +320,9 @@ vim.keymap.set("n", "<leader>lx", function()
         underline = isLspDiagnosticsVisible
     })
 end)
+
+vim.keymap.set("n", "<leader>fsql",
+    function()
+        vim.lsp.buf.format({ timeout_ms = 10000 })
+    end
+)
