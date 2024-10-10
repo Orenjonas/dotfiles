@@ -323,6 +323,6 @@ end)
 
 vim.keymap.set("n", "<leader>fsql",
     function()
-        vim.lsp.buf.format({ timeout_ms = 10000 })
+        vim.lsp.buf.format({ timeout_ms = 100000 })
     end
 )

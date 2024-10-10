@@ -3,7 +3,7 @@ local NS = { noremap = true, silent = true }
 -- Aligns to 1 character
 vim.keymap.set(
     'x',
-    'aa',
+    'gaa',
     function()
         require 'align'.align_to_char({
             length = 1,
@@ -15,7 +15,7 @@ vim.keymap.set(
 -- Aligns to 2 characters with previews
 vim.keymap.set(
     'x',
-    'ad',
+    'gad',
     function()
         require 'align'.align_to_char({
             preview = true,
@@ -28,7 +28,7 @@ vim.keymap.set(
 -- Aligns to a string with previews
 vim.keymap.set(
     'x',
-    'aw',
+    'gaw',
     function()
         require 'align'.align_to_string({
             preview = true,
@@ -41,7 +41,7 @@ vim.keymap.set(
 -- Aligns to a Vim regex with previews
 vim.keymap.set(
     'x',
-    'ar',
+    'gar',
     function()
         require 'align'.align_to_string({
             preview = true,
@@ -78,4 +78,3 @@ vim.keymap.set(
     end,
     NS
 )
-

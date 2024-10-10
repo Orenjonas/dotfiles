@@ -155,7 +155,7 @@ require("lazy").setup({
     { "zbirenbaum/copilot.lua", lazy = true },
     { 'Vonr/align.nvim',        branch = "v2", lazy = true, },
     "jidn/vim-dbml",
-    { 'kevinhwang91/nvim-ufo', dependencies = { 'kevinhwang91/promise-async' } },
+    { 'kevinhwang91/nvim-ufo',  dependencies = { 'kevinhwang91/promise-async' } },
     "PeterRincker/vim-argumentative",
     {
         'kristijanhusak/vim-dadbod-ui',
@@ -175,4 +175,6 @@ require("lazy").setup({
         end,
     },
 
+    { 'bkad/CamelCaseMotion' },
+    { 'thugcee/nvim-map-to-lua' },
 })
